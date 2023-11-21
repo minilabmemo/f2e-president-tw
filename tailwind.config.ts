@@ -20,14 +20,15 @@ const config: Config = {
       'gray': "#E9ECEF",
 
     },
-    borderRadius: {
-      'btn': '500px',
-    },
+
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      borderRadius: {
+        'btn': '500px',
       },
     },
   },

@@ -9,35 +9,21 @@ import person5 from '../assets/images/person5.png'
 import person6 from '../assets/images/person6.png'
 import Link from "next/link";
 import React from 'react'
+import { Years } from './const'
 
 
 function YearList() {
-  const years = [{
-    year: 2020,
-  },
-  {
-    year: 2016,
-  }, {
-    year: 2012,
-  }, {
-    year: 2008,
-  }, {
-    year: 2004,
-  }, {
-    year: 2000,
-  }, {
-    year: 1996,
-  }
-  ]
+
   return (
 
     <div className="flex justify-center w-full flex-wrap	gap-4">
-      {years.map((item, index) => (
+      {Years.map((item, index) => (
         <div key={index}>
-          <div className='flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  '>
-            <Link href={`/years/ ${item.year}`}>
+          <Link href={`/year/${item.year}`}>
+            <div className='flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  '>
               {item.year}
-            </Link></div>
+            </div>
+          </Link>
         </div>
       ))}
     </div>
@@ -51,7 +37,7 @@ export default function Home() {
   return (
     <>
 
-      <main className="container bg-white h-screen w-full md:w-96 lg:w-full mx-auto font-inter">
+      <main className="container bg-white h-screen w-full md:w-96 lg:w-full mx-auto">
         <div className="content w-[calc((924/1920)*100vw)] mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
             <div >  <Image src={logo} alt="Logo" /></div>
