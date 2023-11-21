@@ -7,11 +7,12 @@ import { useState } from 'react';
 import icon_fb from "../../../assets/images/icon_fb.svg"
 import icon_yt from "../../../assets/images/icon_yt.svg"
 import icon_ig from "../../../assets/images/icon_ig.svg"
-import { StreetMap } from './StreetMap';
+import TaiwanMap from './TaiwanMap';
+
 
 export default function Page({ params }: { params: { year: string } }) {
 
-  const [isSelect, setIsSelect] = useState(false);
+  // const [isSelect, setIsSelect] = useState(false);
   return <>
     <main className="container  h-screen w-full  md:w-96 lg:w-full mx-auto ">
 
@@ -24,52 +25,43 @@ export default function Page({ params }: { params: { year: string } }) {
         <div className="options mx-auto flex items-center">
           <div className="t">選擇年份：</div>
           <div className="relative inline-block">
-            <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+            <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " >
               <span className="text-base">  {params.year}</span>
               <span className="text-lg">&#9660;</span>
             </button>
-            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
+            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
               {Years.map((item, index) => (
-                <>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
-                </>)
+                <div key={index}>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>  </div>)
+
               )}
             </ul>
           </div>
           <div className="locations">
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " >
                 <span className="text-base">  全部</span>
                 <span className="text-lg">&#9660;</span>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
-                {Years.map((item, index) => (
-                  <>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
-                  </>)
-                )}
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
+
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  ">
                 <span className="text-base">  選擇區域</span>
                 <span className="text-lg">&#9660;</span>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
-                {Years.map((item, index) => (
-                  <>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
-                  </>)
-                )}
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
+
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  "  >
                 <span className="text-base">  選擇里</span>
                 <span className="text-lg">&#9660;</span>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
-                {Years.map((item, index) => (
-                  <>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
-                  </>)
-                )}
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white`}>
+
               </ul>
             </div>
           </div>
@@ -89,10 +81,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
       <div className="bg-red-100 w-full  h-full flex">
         <div className="bg-red-100 w-1/3  h-full">
-          <StreetMap id="street-map"
-            initZoom={8}
-
-          />
+          <TaiwanMap></TaiwanMap>
         </div>
 
         <div className="bg-red-100 w-2/3 ">
