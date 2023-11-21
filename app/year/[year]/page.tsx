@@ -7,6 +7,7 @@ import { useState } from 'react';
 import icon_fb from "../../../assets/images/icon_fb.svg"
 import icon_yt from "../../../assets/images/icon_yt.svg"
 import icon_ig from "../../../assets/images/icon_ig.svg"
+import { StreetMap } from './StreetMap';
 
 export default function Page({ params }: { params: { year: string } }) {
 
@@ -87,8 +88,11 @@ export default function Page({ params }: { params: { year: string } }) {
       </header>
 
       <div className="bg-red-100 w-full  h-full flex">
-        <div className="bg-red-100 w-1/3">
-          test
+        <div className="bg-red-100 w-1/3  h-full">
+          <StreetMap id="street-map"
+            initZoom={8}
+
+          />
         </div>
 
         <div className="bg-red-100 w-2/3 ">

@@ -42,3 +42,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 npx create-next-app@latest -ts
 tailwind css Yes
 ```
+## Node
+ nvm use v20.9.0 for 'next@14.0.3',
+Now using node v20.9.0 (npm v10.1.0)
+$ node -v
+v20.9.0
