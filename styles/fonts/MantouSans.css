@@ -1,0 +1,7 @@
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Mantou Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./MantouSans-Regular.woff2) format('woff2');
+}
