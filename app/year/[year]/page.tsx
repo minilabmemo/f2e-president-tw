@@ -12,7 +12,7 @@ import TaiwanMap from './TaiwanMap';
 
 export default function Page({ params }: { params: { year: string } }) {
 
-  // const [isSelect, setIsSelect] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
   return <>
     <main className="container  h-screen w-full  md:w-96 lg:w-full mx-auto ">
 
@@ -25,11 +25,11 @@ export default function Page({ params }: { params: { year: string } }) {
         <div className="options mx-auto flex items-center">
           <div className="t">選擇年份：</div>
           <div className="relative inline-block">
-            <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " >
+            <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
               <span className="text-base">  {params.year}</span>
               <span className="text-lg">&#9660;</span>
             </button>
-            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
+            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
               {Years.map((item, index) => (
                 <div key={index}>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>  </div>)
 
@@ -38,29 +38,29 @@ export default function Page({ params }: { params: { year: string } }) {
           </div>
           <div className="locations">
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " >
+              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  全部</span>
                 <span className="text-lg">&#9660;</span>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  ">
+              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  選擇區域</span>
                 <span className="text-lg">&#9660;</span>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  "  >
+              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  選擇里</span>
                 <span className="text-lg">&#9660;</span>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white`}>
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
               </ul>
             </div>
