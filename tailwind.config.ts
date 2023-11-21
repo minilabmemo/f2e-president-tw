@@ -7,21 +7,20 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      ms: ["Mantou Sans", "system-ui", "Segoe UI"],
-
-    },
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      'white': '#ffffff',
-      'pink': '#D4009B',
-      'primary': '#334155',
-      'gray': "#E9ECEF",
-
-    },
-
     extend: {
+      fontFamily: {
+        ms: ["Mantou Sans", "system-ui", "Segoe UI"],
+
+      },
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        'white': '#ffffff',
+        'pink': '#D4009B',
+        'primary': '#334155',
+        'gray': "#E9ECEF",
+
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
