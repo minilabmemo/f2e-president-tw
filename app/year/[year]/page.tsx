@@ -15,8 +15,7 @@ import { getResultByYear, result_2020 } from '@/app/utility/total';
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
 import { calcVotingResults } from '@/app/utility/city';
-
-export const PersonsResult = () => {
+const PersonsResult = () => {
   const items = getResultByYear(2020) || [];
   const totalVotes = items.reduce((acc, item) => acc + parseInt(item.number.replace(/,/g, ''), 10), 0);
   items.forEach(item => {
@@ -62,13 +61,6 @@ export const PersonsResult = () => {
 }
 
 
-interface TableRow {
-  city: string;
-  voteRate: number;
-  highestVote: string;
-  voteCount: number;
-  voterTurnout: number;
-}
 
 
 const Table: React.FC = () => {
@@ -91,7 +83,7 @@ const Table: React.FC = () => {
             <tr key={index} className="hover:bg-gray-100">
               <td className="border p-2">{row.行政區別}</td>
               <td className="border p-2">
-                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
+                {row.投票率統計 [1].percentage}%/ {row.投票率統計 [2].percentage}%/ {row.投票率統計 [3].percentage}%</td>
               <td className="border p-2">{row.勝出.name}</td>
               <td className="border p-2">{row.總計}</td>
               <td className="border p-2">{row.投票率}%</td>
@@ -179,7 +171,7 @@ export default function Page({ params }: { params: { year: string } }) {
       </header>
 
       <div className="w-full  flex h-[calc(100vh-66px)]">
-        <div className="w-1/3 ">
+        <div className="w-1/3 h-full">
           <TaiwanMap></TaiwanMap>
         </div>
 

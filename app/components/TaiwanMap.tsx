@@ -25,7 +25,7 @@ export default function TaiwanMap() {
   useEffect(() => {
     const res = calcKeyVotingResults;
     const width = 600;
-    const height = 800;
+    const height = 900;
     const screenWidth = Math.min(window.innerWidth, 1920);
     const oneThirdWidth = `${(screenWidth / 3)}`;
     const screenHeight = window.innerHeight - 66;
@@ -38,16 +38,15 @@ export default function TaiwanMap() {
       const svg = d3
         .select(mapRef.current)
         .append('svg')
-        .attr('width', oneThirdWidth)
-        .attr('height', screenHeight)
+        .attr('width', width)
+        .attr('height', height)
         .attr('id', 'svg')
-        .attr("class", "bg-blue-200")
 
 
 
       const projection = d3.geoMercator()
         .scale(12000)
-        .center([120.5, 24.5])
+        .center([120.5, 23.5])
         .translate([width / 3, height / 2]);
 
       const pathGenerator = d3.geoPath().projection(projection);
@@ -104,14 +103,14 @@ export default function TaiwanMap() {
   });
 
   return (
-    <div className="container-map">
-      <div className="taiwan-map">
+    <>
+      <div className="taiwan-map h-full w-full bg-blue-200 flex justify-center items-center">
         <div ref={mapRef} id="map"></div>
         <div className='fill-orange-150 '></div>
         <div className='fill-green-150'></div>
       </div>
 
-    </div>
+    </>
   );
 };
 
