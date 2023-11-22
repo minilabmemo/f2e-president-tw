@@ -16,7 +16,7 @@ function YearList() {
 
   return (
 
-    <div className="flex justify-center w-full flex-wrap	gap-4">
+    <div className="flex justify-center flex-wrap	gap-4">
       {Years.map((item, index) => (
         <div key={index}>
           <Link href={`/year/${item.year}`}>
@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <>
 
-      <main className="container h-screen w-full md:w-96 lg:w-full mx-auto">
-        <div className="content w-screen mx-auto h-full flex justify-start flex-col items-center gap-6">
+      <main className="container  w-full md:w-96 lg:w-full mx-auto">
+        <div className="content  mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
             <div >  <Image src={logo} alt="Logo" /></div>
 

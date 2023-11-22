@@ -23,8 +23,8 @@ export default function TaiwanMap() {
 
   useEffect(() => {
 
-    const width = 900;
-    const height = 800;
+    const width = 1000;
+    const height = 900;
 
     if (!hasFetchedData.current) { // 只有在尚未獲取數據的情況下執行
       console.log("🚀 ~ file: TaiwanMap.tsx:18 ~ useEffect ~ useEffect:", hasFetchedData.current)
