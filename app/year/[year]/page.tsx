@@ -14,27 +14,50 @@ import React from 'react'
 import { getResultByYear, result_2020 } from '@/app/utility/total';
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
-import { newVotingResults } from '@/app/utility/city';
+import { calcVotingResults } from '@/app/utility/city';
 
 export const PersonsResult = () => {
   const items = getResultByYear(2020) || [];
+  const totalVotes = items.reduce((acc, item) => acc + parseInt(item.number.replace(/,/g, ''), 10), 0);
+  items.forEach(item => {
+    const votes = parseInt(item.number.replace(/,/g, ''), 10);
+    const percentage = ((votes / totalVotes) * 100).toFixed(2) + '%';
+    item.percentage = percentage;
+  });
   return (
-    <div className=" flex flex-wrap justify-between items-center">
+    <>
+      <div className=" flex flex-wrap justify-between items-center">
 
-      {items
-        .slice(0, 3)
-        .map((item, index) => (
-          <div className="person flex w-[170px] h-[70px] justify-around items-center " key={index}>
-            <div className='w-max'> {item.imageNode}</div>
-            <div className="flex flex-col w-max gap-1">
-              <div className='text-secondary text-xs/lh150'>{item.party}</div>
-              <div className='text-primary text-base/lh150'>{item.name}</div>
-              <div className='text-primary text-base/lh150 font-bold'> <span>{item.number}</span> 票</div>
+        {items
+          .slice(0, 3)
+          .map((item, index) => (
+            <div className="person flex w-[170px] h-[70px] justify-around items-center " key={index}>
+              <div className='w-max'> {item.imageNode}</div>
+              <div className="flex flex-col w-max gap-1">
+                <div className='text-secondary text-xs/lh150'>{item.party}</div>
+                <div className='text-primary text-base/lh150'>{item.name}</div>
+                <div className='text-primary text-base/lh150 font-bold'> <span>{item.number}</span> 票</div>
+              </div>
             </div>
-          </div>
 
-        ))}
-    </div>
+          ))}
+      </div>
+      <div className="bar rounded-[50px] h-[18px] w-full flex">
+        {items
+          .slice(0, 3)
+          .map((item, index) => {
+            const color = "bg-" + item.color;
+            return (
+              <div key={index} className={` h-full ${color}`} style={{ width: item.percentage }}></div>
+            )
+          }
+          )}
+        {/* FIXME 因為 postcss 只會把需要的 class 產生出來 動態的會抓不到 class 樣式 因為寬度要用 style 放入 而顏色可以事先放置 待確認更好的做法 */}
+        <div className=" bg-blue-150" ></div>
+        <div className="  bg-orange-150"></div>
+        <div className=" bg-green-150"></div>
+      </div>
+    </>
   )
 }
 
@@ -47,14 +70,10 @@ interface TableRow {
   voterTurnout: number;
 }
 
-const tableData: TableRow[] = [
-  { city: '台北', voteRate: 60, highestVote: '候選人 A', voteCount: 40000, voterTurnout: 70 },
-  { city: '新北', voteRate: 55, highestVote: '候選人 B', voteCount: 35000, voterTurnout: 68 },
-  // 添加更多行...
-];
+
 const Table: React.FC = () => {
-  const res = newVotingResults;
-  console.log("🚀 ~ file: page.tsx:88 ~ Page ~ res:", res)
+  const res = calcVotingResults;
+
   return (
     <div className="container mx-auto mt-8">
       <table className="min-w-full border border-gray-300">
@@ -72,7 +91,7 @@ const Table: React.FC = () => {
             <tr key={index} className="hover:bg-gray-100">
               <td className="border p-2">{row.行政區別}</td>
               <td className="border p-2">
-                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
+                {row.投票率統計 [1].percentage}%/ {row.投票率統計 [2].percentage}%/ {row.投票率統計 [3].percentage}%</td>
               <td className="border p-2">{row.勝出.name}</td>
               <td className="border p-2">{row.總計}</td>
               <td className="border p-2">{row.投票率}%</td>
@@ -160,7 +179,7 @@ export default function Page({ params }: { params: { year: string } }) {
       </header>
 
       <div className="w-full  flex h-[calc(100vh-66px)]">
-        <div className="w-1/3  ">
+        <div className="w-1/3 ">
           <TaiwanMap></TaiwanMap>
         </div>
 
@@ -172,7 +191,7 @@ export default function Page({ params }: { params: { year: string } }) {
               <div className="flex gap-3 ">
                 <div className="flex rounded-xl bg-white w-1/2 flex-col gap-3 items-center px-4 py-8">
                   <PersonsResult />
-                  <div className="bar rounded-[50px] bg-blue-400 h-[18px] w-full"></div>
+
                 </div>
                 <div className="flex rounded-xl bg-white w-1/2 flex-wrap">
                   <div className="circle-chart flex justify-center h-full w-1/3 items-center">

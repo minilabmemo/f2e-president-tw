@@ -13,6 +13,7 @@ const config: Config = {
       },
       fontFamily: {
         ms: ["Mantou Sans", "system-ui", "Segoe UI"],
+        inter: ["Inter", "system-ui", "Segoe UI"],
 
       },
       colors: {
@@ -22,10 +23,20 @@ const config: Config = {
 
         'primary': '#334155',
         'secondary': "#64748B",
+        blue: {
+          150: "#8082FF",
+        },
+        orange: {
+          150: "#F4A76F",
+        },
+        green: {
+          150: "#57D2A9",
+        },
         pink: {
           150: "#D4009B",
 
         },
+
         gray: {
           50: "#F3F4F4",
           150: "#E9ECEF",

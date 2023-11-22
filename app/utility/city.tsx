@@ -1,7 +1,7 @@
 const personsName = [
-  { "name": "鋼鐵人", "number": 1, "party": "復仇黨", color: "blue" },
-  { "name": "綠巨人", "number": 2, "party": "怪獸黨", color: "green" },
-  { "name": "蜘蛛人", "number": 3, "party": "昆蟲黨", color: "red" },
+  { "name": "鋼鐵人", "number": 1, "party": "復仇黨", color: "blue-150" },
+  { "name": "綠巨人", "number": 2, "party": "怪獸黨", color: "green-150" },
+  { "name": "蜘蛛人", "number": 3, "party": "昆蟲黨", color: "orange-150" },
 ]
 
 
@@ -47,7 +47,7 @@ interface NewVotingResult extends VotingResult {
   勝出: { number: number, name: string, party: string | undefined, color: string };
 }
 
-export const newVotingResults: NewVotingResult[] = votingResults.map(result => {
+export const calcVotingResults: NewVotingResult[] = votingResults.map(result => {
   const { 各組候選人得票情形 } = result;
 
   const totalVotes = Object.values(各組候選人得票情形).reduce((acc, curr) => acc + curr, 0);
@@ -77,3 +77,41 @@ export const newVotingResults: NewVotingResult[] = votingResults.map(result => {
 
   };
 });
+
+
+interface KeyVotingResult {
+  [k: string]: { value: NewVotingResult } | undefined;
+}
+export const calcKeyVotingResults: Map<string, { value: NewVotingResult }> = new Map(
+  votingResults.map(result => {
+    const { 行政區別, 各組候選人得票情形 } = result;
+
+    const totalVotes = Object.values(各組候選人得票情形).reduce((acc, curr) => acc + curr, 0);
+    const 投票率統計 = Object.fromEntries(
+      Object.entries(各組候選人得票情形).map(([key, votes]) => [
+        key,
+        {
+          percentage: ((votes / totalVotes) * 100).toFixed(2) + '%',
+          party: personsName.find(person => person.number === Number(key))?.party
+        }
+      ])
+    );
+
+    const 勝出Key = Object.keys(各組候選人得票情形).reduce((a, b) =>
+      各組候選人得票情形[a as string] > 各組候選人得票情形[b as string] ? a : b
+    );
+
+    const newVotingResult: NewVotingResult = {
+      ...result,
+      投票率統計,
+      勝出: {
+        number: Number(勝出Key),
+        name: personsName.find(person => person.number === Number(勝出Key))?.name ?? '',
+        party: personsName.find(person => person.number === Number(勝出Key))?.party ?? '',
+        color: personsName.find(person => person.number === Number(勝出Key))?.color ?? ''
+      },
+    };
+
+    return [行政區別, { value: newVotingResult }];
+  })
+);
