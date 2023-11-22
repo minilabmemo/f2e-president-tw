@@ -54,6 +54,7 @@ export default function TaiwanMap() {
             .append('path')
             .attr('d', (d: any) => pathGenerator(d.geometry)!)
             .attr('id', (d: any) => 'city' + d.properties.COUNTYCODE)
+            .attr('class', "fill-gray	")
             .on('click', (event, data) => {
               console.log(data);
               document.querySelector('h2')!.textContent = data.properties.COUNTYNAME;

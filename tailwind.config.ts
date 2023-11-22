@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px',
+      },
       fontFamily: {
         ms: ["Mantou Sans", "system-ui", "Segoe UI"],
 
@@ -16,19 +19,28 @@ const config: Config = {
         transparent: 'transparent',
         current: 'currentColor',
         'white': '#ffffff',
-        'pink': '#D4009B',
-        'primary': '#334155',
-        'gray': "#E9ECEF",
 
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'primary': '#334155',
+        'secondary': "#64748B",
+        pink: {
+          150: "#D4009B",
+
+        },
+        gray: {
+          50: "#F3F4F4",
+          150: "#E9ECEF",
+        },
+
       },
       borderRadius: {
         'btn': '500px',
       },
+      fontSize: {
+        s28: '1.75rem'
+      },
+      lineHeight: {
+        'lh150': '150%',
+      }
     },
   },
   plugins: [],

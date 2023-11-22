@@ -12,7 +12,8 @@
     "d3": "^7.8.5",
     "next": "14.0.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "recharts": "^2.10.1"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",

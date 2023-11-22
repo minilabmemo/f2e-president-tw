@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <>
 
-      <main className="container bg-white h-screen w-full md:w-96 lg:w-full mx-auto">
-        <div className="content w-[calc((924/1920)*100vw)] mx-auto h-full flex justify-start flex-col items-center gap-6">
+      <main className="container h-screen w-full md:w-96 lg:w-full mx-auto">
+        <div className="content w-screen mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
             <div >  <Image src={logo} alt="Logo" /></div>
 
