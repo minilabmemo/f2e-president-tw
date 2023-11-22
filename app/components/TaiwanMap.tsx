@@ -26,21 +26,28 @@ export default function TaiwanMap() {
     const res = calcKeyVotingResults;
     const width = 600;
     const height = 800;
+    const screenWidth = Math.min(window.innerWidth, 1920);
+    const oneThirdWidth = `${(screenWidth / 3)}`;
+    const screenHeight = window.innerHeight - 66;
+
 
     if (!hasFetchedData.current) { // 只有在尚未獲取數據的情況下執行
+
       console.log("🚀 ~ file: TaiwanMap.tsx:18 ~ useEffect ~ useEffect:", hasFetchedData.current)
 
       const svg = d3
         .select(mapRef.current)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .attr('id', 'svg');
+        .attr('width', oneThirdWidth)
+        .attr('height', screenHeight)
+        .attr('id', 'svg')
+        .attr("class", "bg-blue-200")
+
 
 
       const projection = d3.geoMercator()
-        .scale(8000)
-        .center([121, 24])
+        .scale(12000)
+        .center([120.5, 24.5])
         .translate([width / 3, height / 2]);
 
       const pathGenerator = d3.geoPath().projection(projection);
