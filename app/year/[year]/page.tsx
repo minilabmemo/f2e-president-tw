@@ -91,7 +91,7 @@ const Table: React.FC = () => {
             <tr key={index} className="hover:bg-gray-100">
               <td className="border p-2">{row.行政區別}</td>
               <td className="border p-2">
-                {row.投票率統計 [1].percentage}%/ {row.投票率統計 [2].percentage}%/ {row.投票率統計 [3].percentage}%</td>
+                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
               <td className="border p-2">{row.勝出.name}</td>
               <td className="border p-2">{row.總計}</td>
               <td className="border p-2">{row.投票率}%</td>
@@ -110,7 +110,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
 
   return <>
-    <main className="container h-full md:w-96 lg:w-full mx-auto ">
+    <main className="container h-full md:w-96 lg:w-full mx-auto bg-white">
 
       <header className="w-full h-[66px] px-3 py-6 flex items-center">
         <Link href={`/`} className="flex justify-between w-max gap-x-2">

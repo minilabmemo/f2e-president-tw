@@ -20,7 +20,7 @@ function YearList() {
       {Years.map((item, index) => (
         <div key={index}>
           <Link href={`/year/${item.year}`}>
-            <div className='flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  '>
+            <div className='flex justify-center bg-gray-150 w-[172px] rounded-[500px] p-3 font-bold  '>
               {item.year}
             </div>
           </Link>
@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <>
 
-      <main className="container  w-full md:w-96 lg:w-full mx-auto">
+      <main className="container  w-full md:w-96 lg:w-full mx-auto bg-white h-screen">
         <div className="content  mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
             <div >  <Image src={logo} alt="Logo" /></div>

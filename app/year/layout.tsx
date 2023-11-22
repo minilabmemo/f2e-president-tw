@@ -6,7 +6,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <div className="h-[100vh] bg-white">{children}</div>
+      <div className="h-[100vh] bg-gray-100">{children}</div>
     </>
   )
 }
