@@ -24,13 +24,6 @@ export default function TaiwanMap() {
 
   useEffect(() => {
     const res = calcKeyVotingResults;
-    const width = 600;
-    const height = 900;
-    const screenWidth = Math.min(window.innerWidth, 1920);
-    const oneThirdWidth = `${(screenWidth / 3)}`;
-    const screenHeight = window.innerHeight - 66;
-
-
     if (!hasFetchedData.current) { // 只有在尚未獲取數據的情況下執行
 
       console.log("🚀 ~ file: TaiwanMap.tsx:18 ~ useEffect ~ useEffect:", hasFetchedData.current)
@@ -38,16 +31,16 @@ export default function TaiwanMap() {
       const svg = d3
         .select(mapRef.current)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
         .attr('id', 'svg')
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0,0,800,3000")
 
 
 
       const projection = d3.geoMercator()
         .scale(12000)
-        .center([120.5, 23.5])
-        .translate([width / 3, height / 2]);
+        .center([121.5, 25.5])
+
 
       const pathGenerator = d3.geoPath().projection(projection);
       hasFetchedData.current = true;
@@ -104,8 +97,8 @@ export default function TaiwanMap() {
 
   return (
     <>
-      <div className="taiwan-map h-full w-full bg-blue-200 flex justify-center items-center">
-        <div ref={mapRef} id="map"></div>
+      <div className="d3-container h-full w-full bg-blue-200 flex justify-center items-center">
+        <div ref={mapRef} id="map" className=" h-full w-full"></div>
         <div className='fill-orange-150 '></div>
         <div className='fill-green-150'></div>
       </div>
