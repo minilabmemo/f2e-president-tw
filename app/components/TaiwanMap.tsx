@@ -44,7 +44,7 @@ export default function TaiwanMap() {
 
       const pathGenerator = d3.geoPath().projection(projection);
       hasFetchedData.current = true;
-      fetch("/taiwan.geojson") // 讀取在/public 下的資源
+      fetch("/file/taiwan.geojson") // 讀取在/public 下的資源
         .then(response => response.json())
         .then(data => {
           const taiwanGeoJSON: GeoJSONFeature[] = data.features;

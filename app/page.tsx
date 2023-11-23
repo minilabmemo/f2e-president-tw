@@ -1,12 +1,5 @@
 import Image from 'next/image'
 
-import logo from '../assets/images/logo.svg'
-import person1 from '../assets/images/person1.png'
-import person2 from '../assets/images/person2.png'
-import person3 from '../assets/images/person3.png'
-import person4 from '../assets/images/person4.png'
-import person5 from '../assets/images/person5.png'
-import person6 from '../assets/images/person6.png'
 import Link from "next/link";
 import React from 'react'
 import { Years } from './const'
@@ -40,7 +33,7 @@ export default function Home() {
       <main className="container  w-full md:w-96 lg:w-full mx-auto bg-white h-screen">
         <div className="content  mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
-            <div >  <Image src={logo} alt="Logo" /></div>
+            <div >  <Image src="/images/logo.svg" width="138" height="86" alt="Logo" /></div>
 
             <h1 className='font-ms text-[60px] text-primary '>台灣歷年總統 都幾？</h1>
 
@@ -51,12 +44,12 @@ export default function Home() {
         </div>
 
         <div className="fixed bottom-0 flex">
-          <div >         <Image src={person1} alt="person" /></div>
-          <div>         <Image src={person2} alt="person" /></div>
-          <div>         <Image src={person3} alt="person" /></div>
-          <div>         <Image src={person4} alt="person" /></div>
-          <div>         <Image src={person5} alt="person" /></div>
-          <div>         <Image src={person6} alt="person" /></div>
+          <div >        <Image src="/images/person1.png" width="280" height="258" alt="person" /></div>
+          <div>         <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
+          <div>         <Image src="/images/person3.png" width="280" height="258" alt="person" /></div>
+          <div>         <Image src="/images/person4.png" width="280" height="258" alt="person" /></div>
+          <div>         <Image src="/images/person5.png" width="280" height="258" alt="person" /></div>
+          <div>         <Image src="/images/person6.png" width="280" height="258" alt="person" /></div>
 
         </div>
       </main >

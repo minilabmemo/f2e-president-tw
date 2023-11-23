@@ -1,12 +1,8 @@
 
 "use client"
 import Image from 'next/image'
-import logo_small from '../../../assets/images/logo_small.svg'
 import { Years } from '@/app/const'
 import { useState } from 'react';
-import icon_fb from "../../../assets/images/icon_fb.svg"
-import icon_yt from "../../../assets/images/icon_yt.svg"
-import icon_ig from "../../../assets/images/icon_ig.svg"
 import TaiwanMap from '../../components/TaiwanMap';
 import Link from "next/link";
 
@@ -83,7 +79,7 @@ const Table: React.FC = () => {
             <tr key={index} className="hover:bg-gray-100">
               <td className="border p-2">{row.行政區別}</td>
               <td className="border p-2">
-                {row.投票率統計 [1].percentage}%/ {row.投票率統計 [2].percentage}%/ {row.投票率統計 [3].percentage}%</td>
+                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
               <td className="border p-2">{row.勝出.name}</td>
               <td className="border p-2">{row.總計}</td>
               <td className="border p-2">{row.投票率}%</td>
@@ -107,7 +103,7 @@ export default function Page({ params }: { params: { year: string } }) {
       <header className="w-full h-[66px] px-3 py-6 flex items-center">
         <Link href={`/`} className="flex justify-between w-max gap-x-2">
 
-          <div >  <Image src={logo_small} alt="Logo" /></div>
+          <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
           <div className='font-ms text-[28px] text-primary '>台灣歷年總統 都幾？</div>
 
         </Link>
@@ -161,9 +157,10 @@ export default function Page({ params }: { params: { year: string } }) {
 
         <div className="flex items-center gap-x-2">
           <span>分享</span>
-          <div className="flex items-center gap-x-1">  <div> <Image src={icon_fb} alt="icon_fb" /></div>
-            <div> <Image src={icon_ig} alt="icon_ig" /></div>
-            <div> <Image src={icon_yt} alt="icon_yt" /> </div></div>
+          <div className="flex items-center gap-x-1">
+            <div> <Image src="/images/icon_fb.svg" width="32" height="33" alt="icon_fb" /></div>
+            <div> <Image src="/images/icon_ig.svg" width="32" height="33" alt="icon_ig" /></div>
+            <div> <Image src="/images/icon_yt.svg" width="32" height="33" alt="icon_yt" /> </div></div>
 
 
 
