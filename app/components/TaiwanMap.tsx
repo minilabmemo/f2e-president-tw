@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { calcKeyVotingResults, calcVotingResults } from '../utility/city';
 interface GeoJSONProperties {
@@ -21,12 +21,9 @@ export default function TaiwanMap() {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const hasFetchedData = useRef(false); // 新增一個 ref 來追蹤是否已經獲取過數據
 
-
   useEffect(() => {
     const res = calcKeyVotingResults;
     if (!hasFetchedData.current) { // 只有在尚未獲取數據的情況下執行
-
-      console.log("🚀 ~ file: TaiwanMap.tsx:18 ~ useEffect ~ useEffect:", hasFetchedData.current)
 
       const svg = d3
         .select(mapRef.current)
@@ -39,12 +36,12 @@ export default function TaiwanMap() {
 
       const projection = d3.geoMercator()
         .scale(12000)
-        .center([121.5, 25.5])
+        .center([121.5, 24.5])
 
 
       const pathGenerator = d3.geoPath().projection(projection);
       hasFetchedData.current = true;
-      fetch("/files/taiwan.geojson") // 讀取在/public 下的資源
+      fetch("/files/taiwan.geojson")
         .then(response => response.json())
         .then(data => {
           const taiwanGeoJSON: GeoJSONFeature[] = data.features;
@@ -55,12 +52,14 @@ export default function TaiwanMap() {
             .append('path')
             .attr('d', (d: any) => pathGenerator(d.geometry)!)
             .attr('id', (d: any) => 'city' + d.properties.COUNTYCODE)
-
+            .attr('name', (d: any) => 'city' + d.properties.COUNTYNAME)
             .attr('class', (d: any) => {
               const select = res.get(d.properties.COUNTYNAME);
               const color = `fill-${select?.value.勝出.color || "gray-200"}`;
               return color
             })
+            .attr('stroke', 'white')
+            .attr('stroke-width', 2)
             .on('click', (event, data) => {
               const keyToFind: string = data.properties.COUNTYNAME; // Ensure keyToFind is of type string
               const vote = res.get(data.properties.COUNTYNAME);
@@ -100,6 +99,7 @@ export default function TaiwanMap() {
       <div className=" h-full w-full bg-blue-200 flex justify-center items-center">
         <div ref={mapRef} id="map" className=" h-full w-full"></div>
       </div>
+
 
     </>
   );
