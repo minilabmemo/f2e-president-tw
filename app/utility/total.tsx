@@ -23,21 +23,21 @@ export const result_2020: TotalItem[] = [
     party: '蝙蝠黨',
     name: '德古拉',
     number: '8,170,231',
-    imageNode: <Image src="/images/role.png" width={48} height={48} alt="role" />,
+    imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />,
     color: "blue-150"
   },
   {
     party: '弓箭黨',
     name: '林克',
     number: '3,522,119',
-    imageNode: <Image src="/images/role.png" width={48} height={48} alt="role" />,
+    imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />,
     color: "orange-150"
   },
   {
     party: '木棍黨',
     name: '綠巨人',
     number: '5,522,119',
-    imageNode: <Image src="/images/role.png" width={48} height={48} alt="role" />,
+    imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />,
     color: "green-150"
   }
 
