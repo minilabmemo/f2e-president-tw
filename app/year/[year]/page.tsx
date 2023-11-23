@@ -47,10 +47,7 @@ const PersonsResult = () => {
             )
           }
           )}
-        {/* FIXME 因為 postcss 只會把需要的 class 產生出來 動態的會抓不到 class 樣式 因為寬度要用 style 放入 而顏色可以事先放置 待確認更好的做法 */}
-        <div className=" bg-blue-150" ></div>
-        <div className="  bg-orange-150"></div>
-        <div className=" bg-green-150"></div>
+
       </div>
     </>
   )

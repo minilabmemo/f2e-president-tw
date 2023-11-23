@@ -43,7 +43,7 @@ export default function Home() {
           <div className="m-b-96"></div>
         </div>
 
-        <div className="fixed bottom-0 flex">
+        <div className="fixed bottom-0 flex w-full m-auto  -translate-x-1/2	left-1/2 justify-center ">
           <div >        <Image src="/images/person1.png" width="280" height="258" alt="person" /></div>
           <div>         <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
           <div>         <Image src="/images/person3.png" width="280" height="258" alt="person" /></div>

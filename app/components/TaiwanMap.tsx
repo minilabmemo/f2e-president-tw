@@ -33,7 +33,7 @@ export default function TaiwanMap() {
         .append('svg')
         .attr('id', 'svg')
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0,0,800,3000")
+        .attr("viewBox", "0,0,800,1200")
 
 
 
@@ -44,7 +44,7 @@ export default function TaiwanMap() {
 
       const pathGenerator = d3.geoPath().projection(projection);
       hasFetchedData.current = true;
-      fetch("/file/taiwan.geojson") // 讀取在/public 下的資源
+      fetch("/files/taiwan.geojson") // 讀取在/public 下的資源
         .then(response => response.json())
         .then(data => {
           const taiwanGeoJSON: GeoJSONFeature[] = data.features;
@@ -97,10 +97,8 @@ export default function TaiwanMap() {
 
   return (
     <>
-      <div className="d3-container h-full w-full bg-blue-200 flex justify-center items-center">
+      <div className=" h-full w-full bg-blue-200 flex justify-center items-center">
         <div ref={mapRef} id="map" className=" h-full w-full"></div>
-        <div className='fill-orange-150 '></div>
-        <div className='fill-green-150'></div>
       </div>
 
     </>
