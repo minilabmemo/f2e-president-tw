@@ -34,6 +34,7 @@ const config: Config = {
         'primary': '#334155',
         'secondary': "#64748B",
         blue: {
+          50: "#E4FAFF",
           150: "#8082FF",
         },
         orange: {

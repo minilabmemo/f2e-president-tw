@@ -7,23 +7,22 @@ import TaiwanMap from '../../components/TaiwanMap';
 import Link from "next/link";
 
 import React from 'react'
-import { getResultByYear, result_2020 } from '@/app/utility/total';
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
 import { calcVotingResults } from '@/app/utility/city';
-const PersonsResult = () => {
-  const items = getResultByYear(2020) || [];
-  const totalVotes = items.reduce((acc, item) => acc + parseInt(item.number.replace(/,/g, ''), 10), 0);
-  items.forEach(item => {
-    const votes = parseInt(item.number.replace(/,/g, ''), 10);
-    const percentage = ((votes / totalVotes) * 100).toFixed(2) + '%';
+import { allVotes } from '@/app/utility/data';
+const PersonsResult = ({ year }: { year: string }) => {
+  const res = allVotes(year)
+  const totalVotes = res.reduce((acc, item) => acc + item.total, 0);
+  res.forEach(item => {
+    const percentage = ((item.total / totalVotes) * 100).toFixed(2) + '%';
     item.percentage = percentage;
   });
   return (
     <>
       <div className=" flex flex-wrap justify-between items-center">
 
-        {items
+        {res
           .slice(0, 3)
           .map((item, index) => (
             <div className="person flex w-[170px] h-[70px] justify-around items-center " key={index}>
@@ -31,14 +30,14 @@ const PersonsResult = () => {
               <div className="flex flex-col w-max gap-1">
                 <div className='text-secondary text-xs/lh150'>{item.party}</div>
                 <div className='text-primary text-base/lh150'>{item.name}</div>
-                <div className='text-primary text-base/lh150 font-bold'> <span>{item.number}</span> 票</div>
+                <div className='text-primary text-base/lh150 font-bold'> <span>{item.total}</span> 票</div>
               </div>
             </div>
 
           ))}
       </div>
       <div className="bar rounded-[50px] h-[18px] w-full flex">
-        {items
+        {res
           .slice(0, 3)
           .map((item, index) => {
             const color = "bg-" + item.color;
@@ -55,9 +54,8 @@ const PersonsResult = () => {
 
 
 
-
-const Table: React.FC = () => {
-  const res = calcVotingResults;
+const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
+  const res = calcVotingResults(year);
 
   return (
     <div className="container mx-auto mt-8">
@@ -76,7 +74,7 @@ const Table: React.FC = () => {
             <tr key={index} className="hover:bg-gray-100">
               <td className="border p-2">{row.行政區別}</td>
               <td className="border p-2">
-                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
+                {row.投票率統計 [1].percentage}%/ {row.投票率統計 [2].percentage}%/ {row.投票率統計 [3].percentage}%</td>
               <td className="border p-2">{row.勝出.name}</td>
               <td className="border p-2">{row.總計}</td>
               <td className="border p-2">{row.投票率}%</td>
@@ -91,6 +89,7 @@ const Table: React.FC = () => {
 export default function Page({ params }: { params: { year: string } }) {
   const [currentCity, setCurrentCity] = useState("")
   const [isSelect, setIsSelect] = useState(false);
+
 
 
 
@@ -166,7 +165,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
       <div className="w-full  flex h-[calc(100vh-66px)]">
         <div className="w-1/3 h-full">
-          <TaiwanMap></TaiwanMap>
+          <TaiwanMap year={params.year}></TaiwanMap>
         </div>
 
         <div className=" overflow-y-scroll w-2/3 px-16 pb-16 flex flex-col gap-y-6">
@@ -176,7 +175,7 @@ export default function Page({ params }: { params: { year: string } }) {
               <div className="font-bold text-xl/lh150 p-4">總統得票數</div>
               <div className="flex gap-3 ">
                 <div className="flex rounded-xl bg-white w-1/2 flex-col gap-3 items-center px-4 py-8">
-                  <PersonsResult />
+                  <PersonsResult year={params.year} />
 
                 </div>
                 <div className="flex rounded-xl bg-white w-1/2 flex-wrap">
@@ -253,7 +252,7 @@ export default function Page({ params }: { params: { year: string } }) {
           </div>
           <div className="result-city">
             <div className="font-bold text-xl/lh150 p-4">各縣市投票總覽</div>
-            <Table></Table>
+            <CitiesResultTable year={params.year}></CitiesResultTable>
 
           </div>
         </div>

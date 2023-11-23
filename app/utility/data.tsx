@@ -1,9 +1,29 @@
-const personsName = [
-  { "name": "鋼鐵人", "number": 1, "party": "復仇黨", color: "blue-150" },
-  { "name": "綠巨人", "number": 2, "party": "怪獸黨", color: "green-150" },
-  { "name": "蜘蛛人", "number": 3, "party": "昆蟲黨", color: "orange-150" },
+
+import Image from 'next/image'
+
+export interface candidateInfo {
+  name: string;
+  number: number;
+  party: string;
+  color: string;
+  imageNode: React.ReactNode;
+}
+export const candidate_2020: candidateInfo[] = [
+  { "name": "蜘蛛人", "number": 1, "party": "復仇黨", color: "orange-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
+  { "name": "鋼鐵人", "number": 2, "party": "鋼鐵黨", color: "blue-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
+  { "name": "綠巨人", "number": 3, "party": "菠菜黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
+]
+const candidate_2021: candidateInfo[] = [
+  { "name": "鋼鐵人", "number": 1, "party": "復仇黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
+  { "name": "綠巨人", "number": 2, "party": "怪獸黨", color: "green-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
+  { "name": "蜘蛛人", "number": 3, "party": "昆蟲黨", color: "orange-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
 ]
 
+
+export const candidatesByYear = {
+  2020: candidate_2020,
+  2021: candidate_2021,
+};
 
 interface VotingResult {
   行政區別: string;
@@ -14,7 +34,7 @@ interface VotingResult {
   投票率: number;
 }
 
-const votingResults: VotingResult[] = [
+export const votingResults_2020: VotingResult[] = [
   { 行政區別: '總 計', 各組候選人得票情形: { 1: 608590, 2: 5522119, 3: 8170231 }, 總計: 608590, 投票率: 74.9029 },
   { 行政區別: '臺北市', 各組候選人得票情形: { 1: 70769, 2: 685830, 3: 875854 }, 總計: 70769, 投票率: 76.3098 },
   { 行政區別: '新北市', 各組候選人得票情形: { 1: 112620, 2: 959631, 3: 1393936 }, 總計: 112620, 投票率: 75.0943 },
@@ -42,76 +62,52 @@ const votingResults: VotingResult[] = [
 
 
 
-interface NewVotingResult extends VotingResult {
-  投票率統計: { [k: string]: { percentage: string, party: string | undefined } };
-  勝出: { number: number, name: string, party: string | undefined, color: string };
+
+
+
+//總統得票數
+interface Overall {
+  name: string;
+  number: number;
+  party: string;
+  color: string;
+  imageNode: React.ReactNode;
+  total: number;
+  percentage?: string;
+}
+export function allVotes(year: string) {
+  var votingResults: VotingResult[] = [];
+  var candidateInfos: candidateInfo[] = [];
+  if (year === "2020") {
+    votingResults = votingResults_2020
+    candidateInfos = candidate_2020
+  }
+
+  var result: Overall[] = [];
+  var totalVote = votingResults.find((item, index) => {
+    return item.行政區別 === "總 計";
+  });
+
+  for (const number in totalVote?.各組候選人得票情形) {
+    const voteNumber = totalVote.各組候選人得票情形[number];
+    const candidate = candidateInfos.find(candidate => candidate.number === parseInt(number, 10));
+    if (candidate) {
+      const transformedResult: Overall = {
+        name: candidate.name,
+        number: candidate.number,
+        party: candidate.party,
+        color: candidate.color,
+        imageNode: candidate.imageNode,
+        total: voteNumber
+      };
+      result.push(transformedResult)
+
+    }
+
+  }
+
+
+  return result
+
 }
 
-export const calcVotingResults: NewVotingResult[] = votingResults.map(result => {
-  const { 各組候選人得票情形 } = result;
-
-  const totalVotes = Object.values(各組候選人得票情形).reduce((acc, curr) => acc + curr, 0);
-  const 投票率統計 = Object.fromEntries(
-    Object.entries(各組候選人得票情形).map(([key, votes]) => [
-      key,
-      {
-        percentage: ((votes / totalVotes) * 100).toFixed(2) + '%',
-        party: personsName.find(person => person.number === Number(key))?.party
-      }
-    ])
-  );
-
-  const 勝出Key = Object.keys(各組候選人得票情形).reduce((a, b) =>
-    各組候選人得票情形[a as string] > 各組候選人得票情形[b as string] ? a : b
-  );
-
-  return {
-    ...result,
-    投票率統計,
-    勝出: {
-      number: Number(勝出Key),
-      name: personsName.find(person => person.number === Number(勝出Key))?.name ?? '',
-      party: personsName.find(person => person.number === Number(勝出Key))?.party ?? '',
-      color: personsName.find(person => person.number === Number(勝出Key))?.color ?? ''
-    },
-
-  };
-});
-
-
-interface KeyVotingResult {
-  [k: string]: { value: NewVotingResult } | undefined;
-}
-export const calcKeyVotingResults: Map<string, { value: NewVotingResult }> = new Map(
-  votingResults.map(result => {
-    const { 行政區別, 各組候選人得票情形 } = result;
-
-    const totalVotes = Object.values(各組候選人得票情形).reduce((acc, curr) => acc + curr, 0);
-    const 投票率統計 = Object.fromEntries(
-      Object.entries(各組候選人得票情形).map(([key, votes]) => [
-        key,
-        {
-          percentage: ((votes / totalVotes) * 100).toFixed(2) + '%',
-          party: personsName.find(person => person.number === Number(key))?.party
-        }
-      ])
-    );
-
-    const 勝出Key = Object.keys(各組候選人得票情形).reduce((a, b) =>
-      各組候選人得票情形[a as string] > 各組候選人得票情形[b as string] ? a : b
-    );
-
-    const newVotingResult: NewVotingResult = {
-      ...result,
-      投票率統計,
-      勝出: {
-        number: Number(勝出Key),
-        name: personsName.find(person => person.number === Number(勝出Key))?.name ?? '',
-        party: personsName.find(person => person.number === Number(勝出Key))?.party ?? '',
-        color: personsName.find(person => person.number === Number(勝出Key))?.color ?? ''
-      },
-    };
-
-    return [行政區別, { value: newVotingResult }];
-  })
-);

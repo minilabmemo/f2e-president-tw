@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { calcKeyVotingResults, calcVotingResults } from '../utility/city';
+import { calcKeyVoteWinCity } from '../utility/city';
 interface GeoJSONProperties {
   COUNTYCODE: string;
   COUNTYNAME: string;
@@ -17,12 +17,12 @@ interface GeoJSONFeature {
   properties: GeoJSONProperties;
   geometry: GeoJSONGeometry;
 }
-export default function TaiwanMap() {
+export default function TaiwanMap({ year }: { year: string }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const hasFetchedData = useRef(false); // 新增一個 ref 來追蹤是否已經獲取過數據
 
   useEffect(() => {
-    const res = calcKeyVotingResults;
+    const res = calcKeyVoteWinCity(year);
     if (!hasFetchedData.current) { // 只有在尚未獲取數據的情況下執行
 
       const svg = d3
@@ -35,8 +35,8 @@ export default function TaiwanMap() {
 
 
       const projection = d3.geoMercator()
-        .scale(12000)
-        .center([121.5, 24.5])
+        .scale(15000)
+        .center([121.5, 25.0])
 
 
       const pathGenerator = d3.geoPath().projection(projection);
@@ -96,8 +96,8 @@ export default function TaiwanMap() {
 
   return (
     <>
-      <div className=" h-full w-full bg-blue-200 flex justify-center items-center">
-        <div ref={mapRef} id="map" className=" h-full w-full"></div>
+      <div className=" h-full w-full bg-blue-50 flex justify-center items-center">
+        <div ref={mapRef} id="map" className=" h-full w-full flex justify-center items-center"></div>
       </div>
 
 
