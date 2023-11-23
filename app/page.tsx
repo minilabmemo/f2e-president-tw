@@ -30,22 +30,22 @@ export default function Home() {
   return (
     <>
 
-      <main className="container  w-full md:w-96 lg:w-full mx-auto bg-white h-screen">
+      <main className="container  w-full  mx-auto bg-white h-screen">
         <div className="content  mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
             <div >  <Image src="/images/logo.svg" width="138" height="86" alt="Logo" /></div>
 
-            <h1 className='font-ms text-[60px] text-primary '>台灣歷年總統 都幾？</h1>
+            <h1 className='font-ms  text-primary text-3xl/lh150 md:text-[60px]'>台灣歷年總統 都幾？</h1>
 
           </div>
-          <div className='f-s-24 text-pink-150 font-bold'>選擇查詢年份</div>
+          <div className='text-xl   md:text-2xl/lh150 text-pink-150 font-bold'>選擇查詢年份</div>
           <YearList />
           <div className="m-b-96"></div>
         </div>
 
         <div className=" container fixed bottom-0 flex   -translate-x-1/2	left-1/2 justify-center ">
-          <div >        <Image src="/images/person1.png" width="280" height="258" alt="person" /></div>
-          <div>         <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
+          <div className='hidden md:block' >        <Image src="/images/person1.png" width="280" height="258" alt="person" /></div>
+          <div className='hidden md:block'>         <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
           <div>         <Image src="/images/person3.png" width="280" height="258" alt="person" /></div>
           <div>         <Image src="/images/person4.png" width="280" height="258" alt="person" /></div>
           <div>         <Image src="/images/person5.png" width="280" height="258" alt="person" /></div>
