@@ -9,8 +9,8 @@ import Link from "next/link";
 import React from 'react'
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
-import { calcVotingResults } from '@/app/utility/city';
-import { allVotes } from '@/app/utility/data';
+import { calcVoteResultByCity } from '@/app/utility/city';
+import { allVotes } from '@/app/utility/overall';
 import RateBar from '@/app/components/RateBar';
 const PersonsResult = ({ year }: { year: string }) => {
   const res = allVotes(year)
@@ -58,7 +58,7 @@ const PersonsResult = ({ year }: { year: string }) => {
 
 
 const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
-  const res = calcVotingResults(year);
+  const res = calcVoteResultByCity(year);
 
   return (
     <div className="container mx-auto mt-2">
@@ -75,17 +75,17 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
         <tbody>
           {res.map((row, index) => (
             <tr key={index} className="hover:bg-gray-100">
-              <td className="border-b p-2 font-bold">{row.行政區別}</td>
+              <td className="border-b p-2 font-bold">{row.area}</td>
               <td className="border-b  p-2  w-1/5">
                 <div className="flex h-[8px] w-full">
-                  <RateBar color={`bg-${row.投票率統計[1].color}`} percentage={`${row.投票率統計[1].percentage}`} showText={false} ></RateBar>
-                  <RateBar color={`bg-${row.投票率統計[2].color}`} percentage={`${row.投票率統計[2].percentage}`} showText={false} ></RateBar>
-                  <RateBar color={`bg-${row.投票率統計[3].color}`} percentage={`${row.投票率統計[3].percentage}`} showText={false} ></RateBar>
+                  <RateBar color={`bg-${row.voteRateByCandidate[1].color}`} percentage={`${row.voteRateByCandidate[1].percentage}`} showText={false} ></RateBar>
+                  <RateBar color={`bg-${row.voteRateByCandidate[2].color}`} percentage={`${row.voteRateByCandidate[2].percentage}`} showText={false} ></RateBar>
+                  <RateBar color={`bg-${row.voteRateByCandidate[3].color}`} percentage={`${row.voteRateByCandidate[3].percentage}`} showText={false} ></RateBar>
                 </div>
               </td>
-              <td className="border-b p-2"> <div className="flex gap-2"><div className="w-8 h-8">{row.勝出.imageNode}</div>  {row.勝出.name}</div></td>
-              <td className="border-b p-2">{row.總計.toLocaleString()}</td>
-              <td className="border-b p-2">{row.投票率.toFixed(2)}%</td>
+              <td className="border-b p-2"> <div className="flex gap-2"><div className="w-8 h-8">{row.winner.imageNode}</div>  {row.winner.name}</div></td>
+              <td className="border-b p-2">{row.total.toLocaleString()}</td>
+              <td className="border-b p-2">{row.voteRate.toFixed(2)}%</td>
 
             </tr>
           ))}

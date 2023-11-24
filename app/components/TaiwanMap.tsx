@@ -55,7 +55,7 @@ export default function TaiwanMap({ year }: { year: string }) {
             .attr('name', (d: any) => 'city' + d.properties.COUNTYNAME)
             .attr('class', (d: any) => {
               const select = res.get(d.properties.COUNTYNAME);
-              const color = `fill-${select?.value.勝出.color || "gray-200"}`;
+              const color = `fill-${select?.value.winner.color || "gray-200"}`;
               return color
             })
             .attr('stroke', 'white')
@@ -63,7 +63,7 @@ export default function TaiwanMap({ year }: { year: string }) {
             .on('click', (event, data) => {
               const keyToFind: string = data.properties.COUNTYNAME; // Ensure keyToFind is of type string
               const vote = res.get(data.properties.COUNTYNAME);
-              const color = `fill-${vote?.value.勝出.color || "gray-200"}`;
+              const color = `fill-${vote?.value.winner.color || "gray-200"}`;
               console.log(color);
               console.log(res.get(keyToFind));
             });
