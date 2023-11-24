@@ -99,20 +99,20 @@ export default function Page({ params }: { params: { year: string } }) {
   return <>
     <main className="container h-full  mx-auto bg-white">
 
-      <header className="w-full h-[10vh]  px-6 py-6 flex items-center">
-        <Link href={`/`} className="flex justify-between w-max gap-x-2">
+      <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center flex-col  justify-center gap-3 h-[10%] lg:h-[66px]  sm:flex-row sm:justify-between">
+        <div className='flex justify-between gap-3 items-center'>
 
-          <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
-          <div className='font-ms text-[28px]  '>台灣歷年總統 都幾？</div>
+          <Link href={`/`} className="flex justify-between w-max gap-x-2">
 
-        </Link>
+            <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
+            <div className='font-ms whitespace-nowrap text-xl sm:text-[28px]  '>台灣歷年總統 都幾？</div>
 
-        <div className="options mx-auto flex items-start  flex-col  lg:flex-row lg:items-center lg:gap-2">
-          <div className='flex'>
-            <div className="font-bold">選擇年份：</div>
+          </Link>
+          <div className=' hidden sm:flex sm:ml-10 sm:items-center'>
+            <div className="font-bold w-[100px]">選擇年份：</div>
             <div className="relative inline-block">
-              <button className="flex  justify-evenly items-center bg-gray-150 w-[172px] rounded-[500px] p-3 lg:p-2    " onClick={() => { setIsSelect(!isSelect) }}>
-                <span className="text-base">  {params.year}</span>
+              <button className="flex  justify-evenly items-center bg-gray-150  w-[76px] rounded-[500px] p-4 lg:p-2 lg:w-[172px]   " onClick={() => { setIsSelect(!isSelect) }}>
+                <span className="text-xs sm:text-base">  {params.year}</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
               </button>
@@ -128,43 +128,37 @@ export default function Page({ params }: { params: { year: string } }) {
                 )}
               </ul>
             </div></div>
+          <div className="options w-[30%] max-[423px] ">
+            <div className="condition  w-full">
+              <div className="relative inline-block w-1/2  bg-gray-150 rounded-l-[500px]">
+                <button className="flex  justify-evenly  items-center  w-full sm:w-[172px]  p-3 lg:p-2" onClick={() => { setIsSelect(!isSelect) }}>
+                  <span className="text-xs sm:text-base">  全部</span>
+                  <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
-          <div className="condition">
-            <div className="relative inline-block">
-              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-l-[500px] p-3 lg:p-2" onClick={() => { setIsSelect(!isSelect) }}>
-                <span className="text-base">  全部</span>
-                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+                </button>
+                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-l-md	 bg-white ${isSelect ? "" : "hidden"}`}>
 
-              </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-l-md	 bg-white ${isSelect ? "" : "hidden"}`}>
+                </ul>
+              </div>
+              <div className="relative inline-block  w-1/2 bg-gray-150  rounded-r-[500px] " >
+                <button className="flex justify-evenly n items-center  w-full  sm:w-[172px] p-3  lg:p-2 lg:w-[100px]" onClick={() => { setIsSelect(!isSelect) }}>
+                  <span className="text-xs sm:text-base">  選擇區域</span>
+                  <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+                </button>
+                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
-              </ul>
+                </ul>
+              </div>
+
             </div>
-            <div className="relative inline-block">
-              <button className="flex justify-evenly n items-center bg-gray-150 w-[172px] p-3  lg:p-2 lg:w-[100px]" onClick={() => { setIsSelect(!isSelect) }}>
-                <span className="text-base">  選擇區域</span>
-                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
-              </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
-              </ul>
-            </div>
-            <div className="relative inline-block">
-              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-r-[500px] p-3  lg:p-2" onClick={() => { setIsSelect(!isSelect) }}>
-                <span className="text-base ">  選擇里</span>
-                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
-
-              </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
-
-              </ul>
-            </div>
           </div>
-
         </div>
 
 
-        <div className="flex items-center gap-x-2">
+
+
+        <div className=" items-center gap-x-2 hidden sm:flex">
           <span>分享</span>
           <div className="flex items-center gap-x-1">
             <div> <Image src="/images/icon_fb.svg" width="32" height="33" alt="icon_fb" /></div>
@@ -176,7 +170,7 @@ export default function Page({ params }: { params: { year: string } }) {
         </div>
       </header>
 
-      <div className="w-full  flex flex-col  h-[90vh] lg:flex-row ">
+      <div className="w-full  flex flex-col   lg:flex-row h-[90%] lg:h-[calc(100vh-66px)]">
         <div className="lg:w-1/3 h-full">
           <TaiwanMap year={params.year}></TaiwanMap>
         </div>
