@@ -14,8 +14,8 @@ interface VotingResult {
 
 interface NewVotingResult extends VotingResult {
 
-  投票率統計: { [k: string]: { percentage: string, party: string | undefined } };
-  勝出: { number: number, name: string, party: string | undefined, color: string };
+  投票率統計: { [k: string]: { percentage: string, party: string | undefined, color: string } };
+  勝出: { number: number, name: string, party: string | undefined, color: string, imageNode: React.ReactNode; };
 }
 export const calcVotingResults = (year: string): NewVotingResult[] => {
   var voteResults: VotingResult[] = [];
@@ -34,7 +34,8 @@ export const calcVotingResults = (year: string): NewVotingResult[] => {
         key,
         {
           percentage: ((votes / totalVotes) * 100).toFixed(2) + '%',
-          party: candidateInfos.find(person => person.number === Number(key))?.party
+          party: candidateInfos.find(person => person.number === Number(key))?.party,
+          color: candidateInfos.find(person => person.number === Number(key))?.color ?? '',
         }
       ])
     );
@@ -50,7 +51,8 @@ export const calcVotingResults = (year: string): NewVotingResult[] => {
         number: Number(勝出Key),
         name: candidateInfos.find(person => person.number === Number(勝出Key))?.name ?? '',
         party: candidateInfos.find(person => person.number === Number(勝出Key))?.party ?? '',
-        color: candidateInfos.find(person => person.number === Number(勝出Key))?.color ?? ''
+        color: candidateInfos.find(person => person.number === Number(勝出Key))?.color ?? '',
+        imageNode: candidateInfos.find(person => person.number === Number(勝出Key))?.imageNode ?? ''
       },
     };
   });
@@ -76,7 +78,8 @@ export const calcKeyVoteWinCity = (year: string): Map<string, { value: NewVoting
         key,
         {
           percentage: ((votes / totalVotes) * 100).toFixed(2) + '%',
-          party: candidateInfos.find(person => person.number === Number(key))?.party
+          party: candidateInfos.find(person => person.number === Number(key))?.party,
+          color: candidateInfos.find(person => person.number === Number(key))?.color ?? '',
         }
       ])
     );
@@ -92,7 +95,8 @@ export const calcKeyVoteWinCity = (year: string): Map<string, { value: NewVoting
         number: Number(勝出Key),
         name: candidateInfos.find(person => person.number === Number(勝出Key))?.name ?? '',
         party: candidateInfos.find(person => person.number === Number(勝出Key))?.party ?? '',
-        color: candidateInfos.find(person => person.number === Number(勝出Key))?.color ?? ''
+        color: candidateInfos.find(person => person.number === Number(勝出Key))?.color ?? '',
+        imageNode: candidateInfos.find(person => person.number === Number(勝出Key))?.imageNode ?? ''
       },
     };
 

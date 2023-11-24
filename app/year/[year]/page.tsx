@@ -11,6 +11,7 @@ import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
 import { calcVotingResults } from '@/app/utility/city';
 import { allVotes } from '@/app/utility/data';
+import RateBar from '@/app/components/RateBar';
 const PersonsResult = ({ year }: { year: string }) => {
   const res = allVotes(year)
   const totalVotes = res.reduce((acc, item) => acc + item.total, 0);
@@ -25,7 +26,7 @@ const PersonsResult = ({ year }: { year: string }) => {
         {res
           .slice(0, 3)
           .map((item, index) => (
-            <div className="person flex w-[170px] h-[70px] justify-around items-center " key={index}>
+            <div key={index} className="person flex w-[170px] h-[70px] justify-around items-center ">
               <div className='w-max'> {item.imageNode}</div>
               <div className="flex flex-col w-max gap-1">
                 <div className='text-secondary text-xs/lh150'>{item.party}</div>
@@ -36,17 +37,19 @@ const PersonsResult = ({ year }: { year: string }) => {
 
           ))}
       </div>
-      <div className="bar rounded-[50px] h-[18px] w-full flex">
+
+      <div className="bar relative  h-[18px] w-full flex ">
+
         {res
           .slice(0, 3)
           .map((item, index) => {
             const color = "bg-" + item.color;
-            return (
-              <div key={index} className={` h-full ${color}`} style={{ width: item.percentage }}></div>
+            return (<>
+              <RateBar key={index} color={color} percentage={item.percentage || '0'} showText></RateBar>
+            </>
             )
           }
           )}
-
       </div>
     </>
   )
@@ -73,16 +76,22 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
           {res.map((row, index) => (
             <tr key={index} className="hover:bg-gray-100">
               <td className="border-b p-2 font-bold">{row.行政區別}</td>
-              <td className="border-b p-2">
-                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
-              <td className="border-b p-2">   {row.勝出.name}</td>
-              <td className="border-b p-2">{row.總計}</td>
-              <td className="border-b p-2">{row.投票率}%</td>
+              <td className="border-b  p-2  w-1/5">
+                <div className="flex h-[8px] w-full">
+                  <RateBar color={`bg-${row.投票率統計[1].color}`} percentage={`${row.投票率統計[1].percentage}`} showText={false} ></RateBar>
+                  <RateBar color={`bg-${row.投票率統計[2].color}`} percentage={`${row.投票率統計[2].percentage}`} showText={false} ></RateBar>
+                  <RateBar color={`bg-${row.投票率統計[3].color}`} percentage={`${row.投票率統計[3].percentage}`} showText={false} ></RateBar>
+                </div>
+              </td>
+              <td className="border-b p-2"> <div className="flex gap-2"><div className="w-8 h-8">{row.勝出.imageNode}</div>  {row.勝出.name}</div></td>
+              <td className="border-b p-2">{row.總計.toLocaleString()}</td>
+              <td className="border-b p-2">{row.投票率.toFixed(2)}%</td>
+
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </div >
   );
 };
 
