@@ -12,9 +12,8 @@ interface VotingResult {
 
 
 
-
-
 interface NewVotingResult extends VotingResult {
+
   投票率統計: { [k: string]: { percentage: string, party: string | undefined } };
   勝出: { number: number, name: string, party: string | undefined, color: string };
 }

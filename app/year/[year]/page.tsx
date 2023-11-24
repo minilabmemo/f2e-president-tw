@@ -58,26 +58,26 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
   const res = calcVotingResults(year);
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-2">
       <table className="min-w-full border border-gray-300">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="border p-2">縣市</th>
-            <th className="border p-2">得票率</th>
-            <th className="border p-2">最高票</th>
-            <th className="border p-2">投票數</th>
-            <th className="border p-2">投票率</th>
+          <tr className="bg-gray-200 text-[14px] font-normal">
+            <th className="border text-left p-2 font-normal">縣市</th>
+            <th className="border text-left p-2 font-normal">得票率</th>
+            <th className="border text-left p-2 font-normal">最高票候選人</th>
+            <th className="border text-left p-2 font-normal">總體投票數</th>
+            <th className="border text-left p-2 font-normal">總投票率</th>
           </tr>
         </thead>
         <tbody>
           {res.map((row, index) => (
             <tr key={index} className="hover:bg-gray-100">
-              <td className="border p-2">{row.行政區別}</td>
-              <td className="border p-2">
-                {row.投票率統計 [1].percentage}%/ {row.投票率統計 [2].percentage}%/ {row.投票率統計 [3].percentage}%</td>
-              <td className="border p-2">{row.勝出.name}</td>
-              <td className="border p-2">{row.總計}</td>
-              <td className="border p-2">{row.投票率}%</td>
+              <td className="border-b p-2 font-bold">{row.行政區別}</td>
+              <td className="border-b p-2">
+                {row.投票率統計[1].percentage}%/ {row.投票率統計[2].percentage}%/ {row.投票率統計[3].percentage}%</td>
+              <td className="border-b p-2">   {row.勝出.name}</td>
+              <td className="border-b p-2">{row.總計}</td>
+              <td className="border-b p-2">{row.投票率}%</td>
             </tr>
           ))}
         </tbody>
@@ -96,20 +96,21 @@ export default function Page({ params }: { params: { year: string } }) {
   return <>
     <main className="container h-full md:w-96 lg:w-full mx-auto bg-white">
 
-      <header className="w-full h-[66px] px-3 py-6 flex items-center">
+      <header className="w-full h-[66px] px-6 py-6 flex items-center">
         <Link href={`/`} className="flex justify-between w-max gap-x-2">
 
           <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
-          <div className='font-ms text-[28px] text-primary '>台灣歷年總統 都幾？</div>
+          <div className='font-ms text-[28px]  '>台灣歷年總統 都幾？</div>
 
         </Link>
 
         <div className="options mx-auto flex items-center">
-          <div className="t">選擇年份：</div>
+          <div className="font-bold">選擇年份：</div>
           <div className="relative inline-block">
-            <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+            <button className="flex  justify-evenly items-center bg-gray-150 w-[172px] rounded-[500px] p-3     " onClick={() => { setIsSelect(!isSelect) }}>
               <span className="text-base">  {params.year}</span>
-              <span className="text-lg">&#9660;</span>
+              <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+
             </button>
             <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
               {Years.map((item, index) => (
@@ -118,29 +119,31 @@ export default function Page({ params }: { params: { year: string } }) {
               )}
             </ul>
           </div>
-          <div className="locations">
+          <div className="condition">
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-l-[500px] p-3 " onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  全部</span>
-                <span className="text-lg">&#9660;</span>
+                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-l-md	 bg-white ${isSelect ? "" : "hidden"}`}>
 
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex justify-evenly n items-center bg-gray-150 w-[172px] p-3   " onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  選擇區域</span>
-                <span className="text-lg">&#9660;</span>
+                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
               </button>
               <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-center bg-gray w-[172px] rounded-[500px] p-3 font-bold  " onClick={() => { setIsSelect(!isSelect) }}>
-                <span className="text-base">  選擇里</span>
-                <span className="text-lg">&#9660;</span>
+              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-r-[500px] p-3  " onClick={() => { setIsSelect(!isSelect) }}>
+                <span className="text-base ">  選擇里</span>
+                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+
               </button>
               <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
 
@@ -232,26 +235,26 @@ export default function Page({ params }: { params: { year: string } }) {
             </div>
           </div>
 
-          <div className="result-party bg-gray-50 rounded-xl">
+          <div className="result-party  rounded-xl">
 
-            <div className="flex gap-3 items-center justify-center">
-              <div className="flex rounded-xl bg-white w-1/2 flex-col gap-3  px-4 py-8">
+            <div className="flex gap-3 items-center justify-center flex-col lg:flex-row">
+              <div className="flex rounded-xl bg-white w-full lg:w-1/2 flex-col  px-4 py-8 border-[1px] border-gray-150">
                 <div className="font-bold text-xl/lh150 p-4">歷屆政黨得票數</div>
-                <div className="w-full h-[300px]">   <Chart></Chart></div>
+                <div className="w-full h-[250px]">   <Chart></Chart></div>
 
 
               </div>
-              <div className="flex rounded-xl bg-white w-1/2  flex-col px-4 py-8">
+              <div className="flex rounded-xl bg-white  w-full lg:w-1/2  flex-col px-4 py-8 border-[1px] border-gray-150">
                 <div className="font-bold text-xl/lh150 p-4">歷屆政黨得票率</div>
 
-                <div className="w-full h-[300px]">   <ChartLine></ChartLine></div>
+                <div className="w-full h-[250px]">   <ChartLine></ChartLine></div>
 
 
               </div>
             </div>
           </div>
           <div className="result-city">
-            <div className="font-bold text-xl/lh150 p-4">各縣市投票總覽</div>
+            <div className="font-bold text-xl/lh150 ">各縣市投票總覽</div>
             <CitiesResultTable year={params.year}></CitiesResultTable>
 
           </div>
