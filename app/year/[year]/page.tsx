@@ -10,20 +10,14 @@ import React from 'react'
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
 import { calcVoteResultByCity } from '@/app/utility/city';
-import { allVotes } from '@/app/utility/overall';
+import { OverallResult, allVotes } from '@/app/utility/overall';
 import RateBar from '@/app/components/RateBar';
-const PersonsResult = ({ year }: { year: string }) => {
-  const res = allVotes(year)
-  const totalVotes = res.reduce((acc, item) => acc + item.total, 0);
-  res.forEach(item => {
-    const percentage = ((item.total / totalVotes) * 100).toFixed(2) + '%';
-    item.percentage = percentage;
-  });
-  return (
-    <>
-      <div className=" flex flex-wrap justify-between items-center">
+const PersonsResult = ({ result }: { result: OverallResult }) => {
 
-        {res
+  return (
+    <div>
+      <div className=" flex flex-wrap justify-between items-center">
+        {result.candidates
           .slice(0, 3)
           .map((item, index) => (
             <div key={index} className="person flex w-[170px] h-[70px] justify-around items-center ">
@@ -40,18 +34,18 @@ const PersonsResult = ({ year }: { year: string }) => {
 
       <div className="bar relative  h-[18px] w-full flex ">
 
-        {res
+        {result.candidates
           .slice(0, 3)
           .map((item, index) => {
             const color = "bg-" + item.color;
-            return (<>
-              <RateBar key={index} color={color} percentage={item.percentage || '0'} showText></RateBar>
-            </>
+            return (<React.Fragment key={index}>
+              <RateBar color={color} percentage={item.percentage || '0'} showText></RateBar>
+            </React.Fragment>
             )
           }
           )}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -99,7 +93,7 @@ export default function Page({ params }: { params: { year: string } }) {
   const [currentCity, setCurrentCity] = useState("")
   const [isSelect, setIsSelect] = useState(false);
 
-
+  const res = allVotes(params.year)
 
 
   return <>
@@ -121,9 +115,14 @@ export default function Page({ params }: { params: { year: string } }) {
               <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
             </button>
-            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
+            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	z-10 bg-white ${isSelect ? "" : "hidden"}`}>
               {Years.map((item, index) => (
-                <div key={index}>  <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>  </div>)
+                <div key={index}>
+                  <Link href={`/year/${item.year}`}>
+                    <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
+
+                  </Link>
+                </div>)
 
               )}
             </ul>
@@ -187,7 +186,7 @@ export default function Page({ params }: { params: { year: string } }) {
               <div className="font-bold text-xl/lh150 p-4">總統得票數</div>
               <div className="flex gap-3 ">
                 <div className="flex rounded-xl bg-white w-1/2 flex-col gap-3 items-center px-4 py-8">
-                  <PersonsResult year={params.year} />
+                  <PersonsResult result={res} />
 
                 </div>
                 <div className="flex rounded-xl bg-white w-1/2 flex-wrap">
@@ -195,7 +194,7 @@ export default function Page({ params }: { params: { year: string } }) {
                     <div className="relative w-[124px] h-[124px]">
                       <div
                         style={{
-                          backgroundImage: 'conic-gradient(from 0deg at 50% 50%, #ff69b4 0%, #ff69b4 75%, #ccc 75%, #ccc 100%)',
+                          backgroundImage: `conic-gradient(from 0deg at 50% 50%, #ff69b4 0%, #ff69b4 ${res.voteRate.toFixed(0) + "%"}, #ccc ${res.voteRate.toFixed(0) + "%"}, #ccc 100%)`,
                           borderImageSlice: 1,
                         }}
                         className="w-full h-full rounded-full flex items-center justify-center relative overflow-hidden"
@@ -206,7 +205,7 @@ export default function Page({ params }: { params: { year: string } }) {
                         ></div>
                         <div className="flex flex-col">
                           <span className="text-primary text-sm  z-10">投票率</span>
-                          <span className="text-pink text-lg font-bold z-10">75%</span>
+                          <span className="text-pink text-lg font-bold z-10">{res.voteRate.toFixed(0)}%</span>
                         </div>
 
 
@@ -219,21 +218,21 @@ export default function Page({ params }: { params: { year: string } }) {
                     <div className="flex w-full justify-start gap-x-10">
                       <div className="flex flex-col w-max gap-y-1">
                         <div className="text-secondary text-sm">投票數</div>
-                        <div className="text-primary text-base font-bold">12,448,302</div>
+                        <div className="text-primary text-base font-bold">{res.voteNumber}</div>
                       </div>
                       <div className="flex flex-col w-max">
                         <div className="text-secondary text-sm">投票率</div>
-                        <div className="text-primary text-base font-bold">68%</div>
+                        <div className="text-primary text-base font-bold">{res.voteRate.toFixed(2)}%</div>
                       </div>
                     </div>
                     <div className="flex w-full justify-start gap-x-10">
                       <div className="flex flex-col w-max gap-y-1">
-                        <div className="text-secondary text-sm">投票數</div>
-                        <div className="text-primary text-base font-bold">12,448,302</div>
+                        <div className="text-secondary text-sm">有效投票數</div>
+                        <div className="text-primary text-base font-bold">{res.ValidVoteNumber}</div>
                       </div>
                       <div className="flex flex-col w-max">
-                        <div className="text-secondary text-sm">投票率</div>
-                        <div className="text-primary text-base font-bold">68%</div>
+                        <div className="text-secondary text-sm">無效投票數</div>
+                        <div className="text-primary text-base font-bold">{res.InvalidVoteNumber}</div>
                       </div>
                     </div>
                   </div>

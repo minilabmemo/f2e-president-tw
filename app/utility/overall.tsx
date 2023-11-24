@@ -1,7 +1,16 @@
-import { VotingResult, candidateInfo, candidate_2020, votingResults_2020 } from "./data";
+import { getDataByYear } from "./data";
 
 //總統得票數
-interface Overall {
+export interface OverallResult {
+  candidates: candidateResult[]; //各組得票計算
+  voteNumber: number;//投票數：number;
+  ValidVoteNumber: number;//有效票數：number;
+  InvalidVoteNumber: number;//無效票數：number;
+  voteRate: number;//投票率：number;
+}
+
+
+interface candidateResult {
   name: string;
   number: number;
   party: string;
@@ -11,38 +20,40 @@ interface Overall {
   percentage?: string;
 }
 export function allVotes(year: string) {
-  var votingResults: VotingResult[] = [];
-  var candidateInfos: candidateInfo[] = [];
-  if (year === "2020") {
-    votingResults = votingResults_2020
-    candidateInfos = candidate_2020
-  }
+  const { voteResults, candidateInfos } = getDataByYear(year);
 
-  var result: Overall[] = [];
-  var totalVote = votingResults.find((item, index) => {
+  var result: OverallResult = { candidates: [], voteNumber: 0, ValidVoteNumber: 0, InvalidVoteNumber: 0, voteRate: 0 };
+
+  var totalVote = voteResults.find((item, index) => {
     return item.行政區別 === "總 計";
   });
-
-  for (const number in totalVote?.各組候選人得票情形) {
-    const voteNumber = totalVote.各組候選人得票情形[number];
-    const candidate = candidateInfos.find(candidate => candidate.number === parseInt(number, 10));
-    if (candidate) {
-      const transformedResult: Overall = {
-        name: candidate.name,
-        number: candidate.number,
-        party: candidate.party,
-        color: candidate.color,
-        imageNode: candidate.imageNode,
-        total: voteNumber
-      };
-      result.push(transformedResult)
-
+  if (totalVote) {
+    var candidateResults: candidateResult[] = [];
+    var { 投票數, 有效票數, 無效票數, 投票率 } = totalVote;
+    for (const number in totalVote?.各組候選人得票情形) {
+      const voteNumber = totalVote.各組候選人得票情形[number];
+      const candidate = candidateInfos.find(candidate => candidate.number === parseInt(number, 10));
+      if (candidate) {
+        const transformedResult: candidateResult = {
+          name: candidate.name,
+          number: candidate.number,
+          party: candidate.party,
+          color: candidate.color,
+          imageNode: candidate.imageNode,
+          total: voteNumber
+        };
+        candidateResults.push(transformedResult);
+      }
     }
+    const totalVotes = candidateResults.reduce((acc, item) => acc + item.total, 0);
+    candidateResults.forEach(item => {
+      const percentage = ((item.total / totalVotes) * 100).toFixed(2) + '%';
+      item.percentage = percentage;
+    });
+    result = { candidates: candidateResults, voteNumber: 投票數, ValidVoteNumber: 有效票數, InvalidVoteNumber: 無效票數, voteRate: 投票率 };
 
   }
-
-
-  return result
-
+  return result;
 }
+
 

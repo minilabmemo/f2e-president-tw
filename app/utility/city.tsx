@@ -1,25 +1,23 @@
-import { VotingResult, candidateInfo, candidate_2020, votingResults_2020 } from "./data";
+import { getDataByYear, } from "./data";
 
 
 
 //各縣市投票總覽
 interface VoteResultByCity {
   area: string;// VotingResult.行政區別
-  total: number;//  VotingResult.總計：number;
+  total: number;//  VotingResult.投票數：number;
   voteRate: number;// VotingResult.投票率：number;
   voteRateByCandidate: { [k: string]: { percentage: string, party: string | undefined, color: string } };
   winner: { number: number, name: string, party: string | undefined, color: string, imageNode: React.ReactNode; };
 }
+
+
+
 export const calcVoteResultByCity = (year: string): VoteResultByCity[] => {
-  var voteResults: VotingResult[] = [];
-  var candidateInfos: candidateInfo[] = [];
-  if (year === "2020") {
-    voteResults = votingResults_2020;
-    candidateInfos = candidate_2020;
-  }
+  const { voteResults, candidateInfos } = getDataByYear(year);
 
   const calculatedResults = voteResults.map(result => {
-    const { 行政區別, 總計, 投票率, 各組候選人得票情形 } = result;
+    const { 行政區別, 投票數, 投票率, 各組候選人得票情形 } = result;
 
 
     const totalVotes = Object.values(各組候選人得票情形).reduce((acc, curr) => acc + curr, 0);
@@ -40,7 +38,7 @@ export const calcVoteResultByCity = (year: string): VoteResultByCity[] => {
 
     return {
       area: 行政區別,
-      total: 總計,
+      total: 投票數,
       voteRate: 投票率,
       voteRateByCandidate,
       winner: {
@@ -62,12 +60,7 @@ interface winnerColor {
 
 //地圖勝出區域與顏色 key:行政區別 value:勝者顏色
 export const calcKeyVoteWinCity = (year: string): Map<string, { value: winnerColor }> => {
-  var voteResults: VotingResult[] = [];
-  var candidateInfos: candidateInfo[] = [];
-  if (year === "2020") {
-    voteResults = votingResults_2020;
-    candidateInfos = candidate_2020;
-  }
+  const { voteResults, candidateInfos } = getDataByYear(year);
   const keyVotingResultsArray: [string, { value: winnerColor }][] = voteResults.map(result => {
     const { 行政區別, 各組候選人得票情形 } = result;
     const winnerKey = Object.keys(各組候選人得票情形).reduce((a, b) =>
