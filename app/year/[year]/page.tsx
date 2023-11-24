@@ -15,7 +15,7 @@ import RateBar from '@/app/components/RateBar';
 const PersonsResult = ({ result }: { result: OverallResult }) => {
 
   return (
-    <div>
+    <div className='flex flex-col gap-3'>
       <div className=" flex flex-wrap justify-between items-center">
         {result.candidates
           .slice(0, 3)
@@ -97,9 +97,9 @@ export default function Page({ params }: { params: { year: string } }) {
 
 
   return <>
-    <main className="container h-full md:w-96 lg:w-full mx-auto bg-white">
+    <main className="container h-full  mx-auto bg-white">
 
-      <header className="w-full h-[66px] px-6 py-6 flex items-center">
+      <header className="w-full h-[10vh]  px-6 py-6 flex items-center">
         <Link href={`/`} className="flex justify-between w-max gap-x-2">
 
           <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
@@ -107,29 +107,31 @@ export default function Page({ params }: { params: { year: string } }) {
 
         </Link>
 
-        <div className="options mx-auto flex items-center">
-          <div className="font-bold">選擇年份：</div>
-          <div className="relative inline-block">
-            <button className="flex  justify-evenly items-center bg-gray-150 w-[172px] rounded-[500px] p-3     " onClick={() => { setIsSelect(!isSelect) }}>
-              <span className="text-base">  {params.year}</span>
-              <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+        <div className="options mx-auto flex items-start  flex-col  lg:flex-row lg:items-center lg:gap-2">
+          <div className='flex'>
+            <div className="font-bold">選擇年份：</div>
+            <div className="relative inline-block">
+              <button className="flex  justify-evenly items-center bg-gray-150 w-[172px] rounded-[500px] p-3 lg:p-2    " onClick={() => { setIsSelect(!isSelect) }}>
+                <span className="text-base">  {params.year}</span>
+                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
-            </button>
-            <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	z-10 bg-white ${isSelect ? "" : "hidden"}`}>
-              {Years.map((item, index) => (
-                <div key={index}>
-                  <Link href={`/year/${item.year}`}>
-                    <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
+              </button>
+              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	z-10 bg-white ${isSelect ? "" : "hidden"}`}>
+                {Years.map((item, index) => (
+                  <div key={index}>
+                    <Link href={`/year/${item.year}`}>
+                      <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
 
-                  </Link>
-                </div>)
+                    </Link>
+                  </div>)
 
-              )}
-            </ul>
-          </div>
+                )}
+              </ul>
+            </div></div>
+
           <div className="condition">
             <div className="relative inline-block">
-              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-l-[500px] p-3 " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-l-[500px] p-3 lg:p-2" onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  全部</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
@@ -139,7 +141,7 @@ export default function Page({ params }: { params: { year: string } }) {
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex justify-evenly n items-center bg-gray-150 w-[172px] p-3   " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex justify-evenly n items-center bg-gray-150 w-[172px] p-3  lg:p-2 lg:w-[100px]" onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base">  選擇區域</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
               </button>
@@ -148,7 +150,7 @@ export default function Page({ params }: { params: { year: string } }) {
               </ul>
             </div>
             <div className="relative inline-block">
-              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-r-[500px] p-3  " onClick={() => { setIsSelect(!isSelect) }}>
+              <button className="flex  justify-evenly  items-center bg-gray-150 w-[172px] rounded-r-[500px] p-3  lg:p-2" onClick={() => { setIsSelect(!isSelect) }}>
                 <span className="text-base ">  選擇里</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
@@ -174,12 +176,12 @@ export default function Page({ params }: { params: { year: string } }) {
         </div>
       </header>
 
-      <div className="w-full  flex h-[calc(100vh-66px)]">
-        <div className="w-1/3 h-full">
+      <div className="w-full  flex flex-col  h-[90vh] lg:flex-row ">
+        <div className="lg:w-1/3 h-full">
           <TaiwanMap year={params.year}></TaiwanMap>
         </div>
 
-        <div className=" overflow-y-scroll w-2/3 px-16 pb-16 flex flex-col gap-y-6">
+        <div className=" overflow-y-scroll lg:w-2/3 px-16 pb-16 flex flex-col gap-y-6">
           <div>
             <div className="h-[86px] font-bold text-s28/lh150 flex items-center"> 全臺縣市總統得票</div>
             <div className="result-person bg-gray-50 rounded-xl px-4 pb-4">
@@ -189,15 +191,15 @@ export default function Page({ params }: { params: { year: string } }) {
                   <PersonsResult result={res} />
 
                 </div>
-                <div className="flex rounded-xl bg-white w-1/2 flex-wrap">
-                  <div className="circle-chart flex justify-center h-full w-1/3 items-center">
+                <div className="flex rounded-xl bg-white w-1/2 flex-col xl:flex-row p-2">
+                  <div className="circle-chart flex justify-center h-full w-full items-center xl:w-1/3 ">
                     <div className="relative w-[124px] h-[124px]">
                       <div
                         style={{
                           backgroundImage: `conic-gradient(from 0deg at 50% 50%, #ff69b4 0%, #ff69b4 ${res.voteRate.toFixed(0) + "%"}, #ccc ${res.voteRate.toFixed(0) + "%"}, #ccc 100%)`,
                           borderImageSlice: 1,
                         }}
-                        className="w-full h-full rounded-full flex items-center justify-center relative overflow-hidden"
+                        className="w-full h-full rounded-full flex items-center justify-center relative overflow-hidden  "
                       >
                         <div
                           className="absolute top-2 left-2 w-[108px] h-[108px] rounded-full"
@@ -214,7 +216,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
                   </div>
 
-                  <div className="flex w-2/3 flex-col h-full justify-center gap-y-4">
+                  <div className="flex w-full flex-col h-full justify-center gap-y-4 xl:w-2/3">
                     <div className="flex w-full justify-start gap-x-10">
                       <div className="flex flex-col w-max gap-y-1">
                         <div className="text-secondary text-sm">投票數</div>

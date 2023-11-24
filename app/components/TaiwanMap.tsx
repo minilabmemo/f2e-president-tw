@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { calcKeyVoteWinCity, calcVotingResults } from '../utility/city';
+import { calcKeyVoteWinCity } from '../utility/city';
 interface GeoJSONProperties {
   COUNTYCODE: string;
   COUNTYNAME: string;
