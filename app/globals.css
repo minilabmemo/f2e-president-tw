@@ -28,3 +28,8 @@ body {
 .outlined-text {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
+*, *::before, *::after {
+  box-sizing: border-box
+}
+

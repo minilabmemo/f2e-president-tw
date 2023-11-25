@@ -61,9 +61,9 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
           <tr className="bg-gray-200 text-[14px] font-normal ">
             <th className="border text-left p-2 font-normal ">縣市</th>
             <th className="border text-left p-2 font-normal">得票率</th>
-            <th className="border text-left p-2 font-normal">最高票候選人</th>
-            <th className="border text-left p-2 font-normal">總體投票數</th>
-            <th className="border text-left p-2 font-normal">總投票率</th>
+            <th className="border text-left p-2 font-normal hidden sm:table-cell">最高票候選人</th>
+            <th className="border text-left p-2 font-normal hidden sm:table-cell">總體投票數</th>
+            <th className="border text-left p-2 font-normal hidden sm:table-cell">總投票率</th>
           </tr>
         </thead>
         <tbody>
@@ -77,12 +77,12 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
                   <RateBar color={`bg-${row.voteRateByCandidate[3].color}`} percentage={`${row.voteRateByCandidate[3].percentage}`} showText={false} ></RateBar>
                 </div>
               </td>
-              <td className="border-b p-2">
+              <td className="border-b p-2 hidden sm:table-cell">
                 <div className="flex gap-2 items-center"><div className="w-8 h-8">{row.winner.imageNode}</div>
                   <span className="font-bold">{row.winner.name}</span> / <span className="text-sm">{row.winner.vice}</span></div>
               </td>
-              <td className="border-b p-2">{row.total.toLocaleString()}</td>
-              <td className="border-b p-2">{row.voteRate.toFixed(2)}%</td>
+              <td className="border-b p-2 hidden sm:table-cell">{row.total.toLocaleString()}</td>
+              <td className="border-b p-2 hidden sm:table-cell">{row.voteRate.toFixed(2)}%</td>
 
             </tr>
           ))}
@@ -169,74 +169,74 @@ export default function Page({ params }: { params: { year: string } }) {
         </div>
       </header>
 
-      <div className="w-full  flex flex-col   lg:flex-row h-[70%] lg:h-[calc(100vh-66px)]">
-        <div className="lg:w-1/3 h-full">
+      <div className="w-full  flex flex-col   lg:flex-row h-[80%] lg:h-[calc(100vh-66px)]">
+        <div className="hidden sm:block lg:w-1/3 h-full">
           <TaiwanMap year={params.year}></TaiwanMap>
         </div>
 
-        <div className=" overflow-y-scroll lg:w-2/3 px-16 pb-16 flex flex-col gap-y-6">
-          <div>
-            <div className="h-[86px] font-bold text-s28/lh150 flex items-center"> 全臺縣市總統得票</div>
-            <div className="result-person bg-gray-50 rounded-xl px-4 pb-4">
-              <div className="font-bold text-xl/lh150 p-4">總統得票數</div>
-              <div className="flex gap-3 ">
-                <div className="flex rounded-xl bg-white w-1/2 flex-col gap-3 items-center px-4 py-8">
-                  <PersonsResult result={res} />
+        <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
 
-                </div>
-                <div className="flex rounded-xl bg-white w-1/2 flex-col xl:flex-row p-2">
-                  <div className="circle-chart flex justify-center h-full w-full items-center xl:w-1/3 ">
-                    <div className="relative w-[124px] h-[124px]">
+          <div className="h-[86px] font-bold text-s28/lh150 flex items-center"> 全臺縣市總統得票</div>
+          <div className="result-person bg-gray-50 rounded-xl px-4 pb-4">
+            <div className="font-bold text-xl/lh150 p-4 ">總統得票數</div>
+            <div className="flex gap-3 flex-wrap sm:flex-nowrap justify-center">
+              <div className="flex rounded-xl bg-white min-w-[311px] w-1/2 flex-col gap-3 items-center px-4 py-8">
+                <PersonsResult result={res} />
+
+              </div>
+              <div className="flex rounded-xl bg-white  min-w-[311px] w-1/2 flex-col xl:flex-row p-2">
+                <div className="circle-chart flex justify-center h-full w-full items-center xl:w-1/3 ">
+                  <div className="relative w-[124px] h-[124px]">
+                    <div
+                      style={{
+                        backgroundImage: `conic-gradient(from 0deg at 50% 50%, #ff69b4 0%, #ff69b4 ${res.voteRate.toFixed(0) + "%"}, #ccc ${res.voteRate.toFixed(0) + "%"}, #ccc 100%)`,
+                        borderImageSlice: 1,
+                      }}
+                      className="w-full h-full rounded-full flex items-center justify-center relative overflow-hidden  "
+                    >
                       <div
-                        style={{
-                          backgroundImage: `conic-gradient(from 0deg at 50% 50%, #ff69b4 0%, #ff69b4 ${res.voteRate.toFixed(0) + "%"}, #ccc ${res.voteRate.toFixed(0) + "%"}, #ccc 100%)`,
-                          borderImageSlice: 1,
-                        }}
-                        className="w-full h-full rounded-full flex items-center justify-center relative overflow-hidden  "
-                      >
-                        <div
-                          className="absolute top-2 left-2 w-[108px] h-[108px] rounded-full"
-                          style={{ backgroundColor: 'white' }}
-                        ></div>
-                        <div className="flex flex-col">
-                          <span className="text-primary text-sm  z-10">投票率</span>
-                          <span className="text-pink text-lg font-bold z-10">{res.voteRate.toFixed(0)}%</span>
-                        </div>
+                        className="absolute top-2 left-2 w-[108px] h-[108px] rounded-full"
+                        style={{ backgroundColor: 'white' }}
+                      ></div>
+                      <div className="flex flex-col">
+                        <span className="text-primary text-sm  z-10">投票率</span>
+                        <span className="text-pink text-lg font-bold z-10">{res.voteRate.toFixed(0)}%</span>
+                      </div>
 
 
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <div className="flex w-full flex-col h-full justify-center gap-y-4 xl:w-2/3">
-                    <div className="flex w-full justify-start gap-x-10">
-                      <div className="flex flex-col w-max gap-y-1">
-                        <div className="text-secondary text-sm">投票數</div>
-                        <div className="text-primary text-base font-bold">{res.voteNumber}</div>
-                      </div>
-                      <div className="flex flex-col w-max">
-                        <div className="text-secondary text-sm">投票率</div>
-                        <div className="text-primary text-base font-bold">{res.voteRate.toFixed(2)}%</div>
-                      </div>
-                    </div>
-                    <div className="flex w-full justify-start gap-x-10">
-                      <div className="flex flex-col w-max gap-y-1">
-                        <div className="text-secondary text-sm">有效投票數</div>
-                        <div className="text-primary text-base font-bold">{res.ValidVoteNumber}</div>
-                      </div>
-                      <div className="flex flex-col w-max">
-                        <div className="text-secondary text-sm">無效投票數</div>
-                        <div className="text-primary text-base font-bold">{res.InvalidVoteNumber}</div>
-                      </div>
                     </div>
                   </div>
-
 
                 </div>
+
+                <div className="flex w-full flex-col h-full justify-center gap-y-4 xl:w-2/3">
+                  <div className="flex w-full justify-start gap-x-10">
+                    <div className="flex flex-col w-max gap-y-1">
+                      <div className="text-secondary text-sm">投票數</div>
+                      <div className="text-primary text-base font-bold">{res.voteNumber}</div>
+                    </div>
+                    <div className="flex flex-col w-max">
+                      <div className="text-secondary text-sm">投票率</div>
+                      <div className="text-primary text-base font-bold">{res.voteRate.toFixed(2)}%</div>
+                    </div>
+                  </div>
+                  <div className="flex w-full justify-start gap-x-10">
+                    <div className="flex flex-col w-max gap-y-1">
+                      <div className="text-secondary text-sm">有效投票數</div>
+                      <div className="text-primary text-base font-bold">{res.ValidVoteNumber}</div>
+                    </div>
+                    <div className="flex flex-col w-max">
+                      <div className="text-secondary text-sm">無效投票數</div>
+                      <div className="text-primary text-base font-bold">{res.InvalidVoteNumber}</div>
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>
+
 
           <div className="result-party  rounded-xl">
 
