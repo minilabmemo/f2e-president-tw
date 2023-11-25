@@ -1,4 +1,4 @@
-import { Years, candidateInfo, candidate_2020, getDataByYear, } from "./data";
+import { Years, candidateInfo, candidate_2016, candidate_2020, getDataByYear, votingResults_2016, votingResults_2020, } from "./data";
 // const data = [
 //   { year: '1996', 菠菜黨：4000, 鋼鐵黨：2400, 復仇黨：2400, },
 //   { year: '2000', 菠菜黨：3000, 鋼鐵黨：1398, 復仇黨：2210, },
@@ -16,20 +16,48 @@ interface DatChart {
 }
 
 
-//TODO year number
+//TODO all year number
 export const calcDatChart = (year: string): DatChart[] => {
   const { voteResults, candidateInfos } = getDataByYear(year);
 
+
+
   const data: DatChart[] = Years.map((yearObj) => {
     const yearData: DatChart = { year: yearObj.year.toString() };
+    if (yearData.year === "2020") {
+      candidate_2020.forEach((candidate) => {
+        const partyName = candidate.party as string;
+        var totalVote = votingResults_2020.find((item, index) => {
+          return item.行政區別 === "總 計";
+        });
 
-    candidate_2020.forEach((candidate) => {
-      const partyName = candidate.party as string; // Explicitly cast partyName to string
-      const voteCount = Math.floor(Math.random() * 5000) + 2000;
-      yearData[partyName] = voteCount;
-    });
+        const voteCount = totalVote?.各組候選人得票情形[candidate.number] || '0';
+        yearData[partyName] = voteCount;
+      });
 
-    return yearData;
+      return yearData;
+    }
+    else if (yearData.year === "2016") {
+      candidate_2016.forEach((candidate) => {
+        const partyName = candidate.party as string;
+        var totalVote = votingResults_2016.find((item, index) => {
+          return item.行政區別 === "總 計";
+        });
+        const voteCount = totalVote?.各組候選人得票情形[candidate.number] || '0';
+        yearData[partyName] = voteCount;
+      });
+
+      return yearData;
+    } else {
+      candidate_2020.forEach((candidate) => {
+        const partyName = candidate.party as string;
+
+        const voteCount = Math.floor(Math.random() * 5000000) + 2000;
+        yearData[partyName] = voteCount;
+      });
+
+      return yearData;
+    }
   });
   data.sort((a, b) => parseInt(a.year) - parseInt(b.year));
 

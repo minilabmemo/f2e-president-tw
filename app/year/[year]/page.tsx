@@ -245,7 +245,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
             <div className="flex gap-3 items-center justify-center flex-col lg:flex-row">
               <div className="flex rounded-xl bg-white w-full lg:w-1/2 flex-col  px-4 py-8 border-[1px] border-gray-150">
-                <div className="font-bold text-xl/lh150 p-4">歷屆政黨得票數</div>
+                <div className="font-bold text-xl/lh150 p-4">歷屆總統政黨得票數</div>
                 <div className="w-full h-[250px]">   <Chart></Chart></div>
 
 
