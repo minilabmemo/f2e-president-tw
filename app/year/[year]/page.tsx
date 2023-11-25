@@ -101,14 +101,11 @@ export default function Page({ params }: { params: { year: string } }) {
   return <>
     <main className="3xl:container h-full  mx-auto bg-white">
 
-      <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center flex-col  justify-center gap-3 h-[10%] lg:h-[66px]  sm:flex-row sm:justify-between">
-        <div className='flex justify-between gap-3 items-center'>
-
+      <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center  justify-center gap-3 h-[20%] lg:h-[66px]  sm:justify-between">
+        <div className='flex justify-between gap-3 items-center flex-col sm:flex-row'>
           <Link href={`/`} className="flex justify-between w-max gap-x-2">
-
             <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
             <div className='font-ms whitespace-nowrap text-xl sm:text-[28px]  '>台灣歷年總統 都幾？</div>
-
           </Link>
           <div className=' hidden sm:flex sm:ml-10 sm:items-center'>
             <div className="font-bold w-[100px]">選擇年份：</div>
@@ -130,7 +127,7 @@ export default function Page({ params }: { params: { year: string } }) {
               </button>
 
             </div></div>
-          <div className="options w-[30%] max-[423px] ">
+          <div className="options w-full sm:w-[30%] max-[423px] ">
             <div className="condition  w-full">
               <div className="relative inline-block w-1/2  bg-gray-150 rounded-l-[500px]">
                 <button className="flex  justify-evenly  items-center  w-full sm:w-[172px]  p-3 lg:p-2" >
@@ -172,7 +169,7 @@ export default function Page({ params }: { params: { year: string } }) {
         </div>
       </header>
 
-      <div className="w-full  flex flex-col   lg:flex-row h-[90%] lg:h-[calc(100vh-66px)]">
+      <div className="w-full  flex flex-col   lg:flex-row h-[70%] lg:h-[calc(100vh-66px)]">
         <div className="lg:w-1/3 h-full">
           <TaiwanMap year={params.year}></TaiwanMap>
         </div>

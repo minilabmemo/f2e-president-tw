@@ -12,7 +12,6 @@ import { getDataByYear } from '../utility/data';
 //   { year: '2016', 菠菜黨：2390, 鋼鐵黨：3800, 復仇黨：2500, },
 //   { year: '2020', 菠菜黨：3490, 鋼鐵黨：4300, 復仇黨：2100, },];
 const data = calcDatChart("2020");
-console.log("🚀 ~ file: Chart.tsx:15 ~ data:", data)
 const { voteResults, candidateInfos } = getDataByYear("2020"); //FIXME all party history
 
 
