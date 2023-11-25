@@ -15,7 +15,7 @@ import RateBar from '@/app/components/RateBar';
 const PersonsResult = ({ result }: { result: OverallResult }) => {
 
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3 min-h-[124px]'>
       <div className=" flex flex-wrap justify-between items-center">
         {result.candidates
           .slice(0, 3)
@@ -55,11 +55,11 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
   const res = calcVoteResultByCity(year);
 
   return (
-    <div className=" mt-2">
+    <div className=" mt-2 ">
       <table className="min-w-full border border-gray-300">
         <thead>
           <tr className="bg-gray-200 text-[14px] font-normal ">
-            <th className="border text-left p-2 font-normal ">縣市</th>
+            <th className="border text-left p-2 font-normal ">地區</th>
             <th className="border text-left p-2 font-normal">得票率</th>
             <th className="border text-left p-2 font-normal hidden sm:table-cell">最高票候選人</th>
             <th className="border text-left p-2 font-normal hidden sm:table-cell">總體投票數</th>
@@ -69,17 +69,27 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
         <tbody>
           {res.map((row, index) => (
             <tr key={index} className="hover:bg-gray-100">
-              <td className="border-b p-2 font-bold">{row.area}</td>
-              <td className="border-b  p-2  w-1/5">
-                <div className="flex h-[8px] w-full">
-                  <RateBar color={`bg-${row.voteRateByCandidate[1].color}`} percentage={`${row.voteRateByCandidate[1].percentage}`} showText={false} ></RateBar>
-                  <RateBar color={`bg-${row.voteRateByCandidate[2].color}`} percentage={`${row.voteRateByCandidate[2].percentage}`} showText={false} ></RateBar>
-                  <RateBar color={`bg-${row.voteRateByCandidate[3].color}`} percentage={`${row.voteRateByCandidate[3].percentage}`} showText={false} ></RateBar>
+              <td className="border-b p-2 font-bold h-[76px]">{row.area}</td>
+              <td className="border-b  px-2  w-2/3   h-[76px] sm:w-1/5">
+                <div className="flex  h-full flex-col items-center justify-evenly">
+                  <div className=" sm:hidden">
+                    <div className="flex gap-2 items-center text-sm">最高票
+                      <div className="w-8 h-8">{row.winner.imageNode}</div>
+                      <span className="font-bold">{row.winner.name}</span> / <span className="text-sm">{row.winner.vice}</span>
+                    </div>
+                  </div>
+                  <div className="flex h-[8px] w-full ">
+                    <RateBar color={`bg-${row.voteRateByCandidate[1].color}`} percentage={`${row.voteRateByCandidate[1].percentage}`} showText={false} ></RateBar>
+                    <RateBar color={`bg-${row.voteRateByCandidate[2].color}`} percentage={`${row.voteRateByCandidate[2].percentage}`} showText={false} ></RateBar>
+                    <RateBar color={`bg-${row.voteRateByCandidate[3].color}`} percentage={`${row.voteRateByCandidate[3].percentage}`} showText={false} ></RateBar></div>
+
                 </div>
               </td>
               <td className="border-b p-2 hidden sm:table-cell">
-                <div className="flex gap-2 items-center"><div className="w-8 h-8">{row.winner.imageNode}</div>
-                  <span className="font-bold">{row.winner.name}</span> / <span className="text-sm">{row.winner.vice}</span></div>
+                <div className="flex gap-2 items-center">
+                  <div className="w-8 h-8">{row.winner.imageNode}</div>
+                  <span className="font-bold">{row.winner.name}</span> / <span className="text-sm">{row.winner.vice}</span>
+                </div>
               </td>
               <td className="border-b p-2 hidden sm:table-cell">{row.total.toLocaleString()}</td>
               <td className="border-b p-2 hidden sm:table-cell">{row.voteRate.toFixed(2)}%</td>
@@ -93,15 +103,14 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
 };
 
 export default function Page({ params }: { params: { year: string } }) {
-  const [currentCity, setCurrentCity] = useState("")
 
   const res = allVotes(params.year)
 
 
   return <>
-    <main className="3xl:container h-full  mx-auto bg-white">
+    <main className="3xl:container   mx-auto bg-white">
 
-      <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center  justify-center gap-3 h-[20%] lg:h-[66px]  sm:justify-between">
+      <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center  justify-center gap-3 h-auto lg:h-[66px]  sm:justify-between">
         <div className='flex justify-between gap-3 items-center flex-col sm:flex-row'>
           <Link href={`/`} className="flex justify-between w-max gap-x-2">
             <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
@@ -169,23 +178,23 @@ export default function Page({ params }: { params: { year: string } }) {
         </div>
       </header>
 
-      <div className="w-full  flex flex-col   lg:flex-row h-[80%] lg:h-[calc(100vh-66px)]">
-        <div className="hidden sm:block lg:w-1/3 h-full">
+      <div className="w-full  flex flex-col   lg:flex-row h-auto lg:h-[calc(100vh-66px)]">
+        <div className="hidden lg:block lg:w-1/3 h-full">
           <TaiwanMap year={params.year}></TaiwanMap>
         </div>
 
         <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
 
-          <div className="h-[86px] font-bold text-s28/lh150 flex items-center"> 全臺縣市總統得票</div>
-          <div className="result-person bg-gray-50 rounded-xl px-4 pb-4">
-            <div className="font-bold text-xl/lh150 p-4 ">總統得票數</div>
-            <div className="flex gap-3 flex-wrap sm:flex-nowrap justify-center">
-              <div className="flex rounded-xl bg-white min-w-[311px] w-1/2 flex-col gap-3 items-center px-4 py-8">
+          <div className="sm:h-[86px] font-bold text-s28/lh150 "> 全臺縣市總統得票</div>
+          <div className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
+            <div className="font-bold text-xl/lh150 p-4  ">總統得票數</div>
+            <div className="flex items-stretch flex-wrap sm:flex-nowrap justify-center sm:justify-evenly sm:p-2 gap-3  ">
+              <div className="flex rounded-xl bg-white  min-w-[311px]  w-1/2 flex-col gap-3 items-center px-4 py-4 sm:py-8 ">
                 <PersonsResult result={res} />
 
               </div>
-              <div className="flex rounded-xl bg-white  min-w-[311px] w-1/2 flex-col xl:flex-row p-2">
-                <div className="circle-chart flex justify-center h-full w-full items-center xl:w-1/3 ">
+              <div className="flex rounded-xl bg-white  min-w-[311px]   w-1/2  flex-col justify-center items-center flex-wrap md:flex-row px-4 py-8 ">
+                <div className="circle-chart sm:w-1/3  min-w-[124px]">
                   <div className="relative w-[124px] h-[124px]">
                     <div
                       style={{
@@ -209,7 +218,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
                 </div>
 
-                <div className="flex w-full flex-col h-full justify-center gap-y-4 xl:w-2/3">
+                <div className="flex w-full flex-col  justify-center gap-y-4 sm:w-2/3">
                   <div className="flex w-full justify-start gap-x-10">
                     <div className="flex flex-col w-max gap-y-1">
                       <div className="text-secondary text-sm">投票數</div>
