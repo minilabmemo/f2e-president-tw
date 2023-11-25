@@ -24,7 +24,7 @@ const PersonsResult = ({ result }: { result: OverallResult }) => {
               <div className='w-max'> {item.imageNode}</div>
               <div className="flex flex-col w-max gap-1">
                 <div className='text-secondary text-xs/lh150'>{item.party}</div>
-                <div className='text-primary text-base/lh150'>{item.name}</div>
+                <div className='text-primary text-base/lh150'><span className="font-bold">{item.name}</span> / <span className="text-sm">{item.vice}</span></div>
                 <div className='text-primary text-base/lh150 font-bold'> <span>{item.total}</span> 票</div>
               </div>
             </div>
@@ -77,7 +77,10 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
                   <RateBar color={`bg-${row.voteRateByCandidate[3].color}`} percentage={`${row.voteRateByCandidate[3].percentage}`} showText={false} ></RateBar>
                 </div>
               </td>
-              <td className="border-b p-2"> <div className="flex gap-2"><div className="w-8 h-8">{row.winner.imageNode}</div>  {row.winner.name}</div></td>
+              <td className="border-b p-2">
+                <div className="flex gap-2 items-center"><div className="w-8 h-8">{row.winner.imageNode}</div>
+                  <span className="font-bold">{row.winner.name}</span> / <span className="text-sm">{row.winner.vice}</span></div>
+              </td>
               <td className="border-b p-2">{row.total.toLocaleString()}</td>
               <td className="border-b p-2">{row.voteRate.toFixed(2)}%</td>
 

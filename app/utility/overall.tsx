@@ -12,6 +12,7 @@ export interface OverallResult {
 
 interface candidateResult {
   name: string;
+  vice: string;
   number: number;
   party: string;
   color: string;
@@ -36,6 +37,7 @@ export function allVotes(year: string) {
       if (candidate) {
         const transformedResult: candidateResult = {
           name: candidate.name,
+          vice: candidate.vice,
           number: candidate.number,
           party: candidate.party,
           color: candidate.color,

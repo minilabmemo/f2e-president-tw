@@ -8,7 +8,7 @@ interface VoteResultByCity {
   total: number;//  VotingResult.投票數：number;
   voteRate: number;// VotingResult.投票率：number;
   voteRateByCandidate: { [k: string]: { percentage: string, party: string | undefined, color: string } };
-  winner: { number: number, name: string, party: string | undefined, color: string, imageNode: React.ReactNode; };
+  winner: { number: number, name: string, vice: string, party: string | undefined, color: string, imageNode: React.ReactNode; };
 }
 
 
@@ -44,6 +44,7 @@ export const calcVoteResultByCity = (year: string): VoteResultByCity[] => {
       winner: {
         number: Number(winnerKey),
         name: candidateInfos.find(person => person.number === Number(winnerKey))?.name ?? '',
+        vice: candidateInfos.find(person => person.number === Number(winnerKey))?.vice ?? '',
         party: candidateInfos.find(person => person.number === Number(winnerKey))?.party ?? '',
         color: candidateInfos.find(person => person.number === Number(winnerKey))?.color ?? '',
         imageNode: candidateInfos.find(person => person.number === Number(winnerKey))?.imageNode ?? ''

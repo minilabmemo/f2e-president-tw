@@ -2,26 +2,27 @@
 import Image from 'next/image'
 
 export interface candidateInfo {
-  name: string;
+  name: string;//總統
+  vice: string;//副手
   number: number;
   party: string;
   color: string;
   imageNode: React.ReactNode;
 }
 export const candidate_2020: candidateInfo[] = [
-  { "name": "蜘蛛人", "number": 1, "party": "復仇黨", color: "orange-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
-  { "name": "鋼鐵人", "number": 2, "party": "鋼鐵黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
-  { "name": "綠巨人", "number": 3, "party": "菠菜黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
+  { "name": "鋼鐵人", "vice": "蜘蛛人", "number": 1, "party": "復仇黨", color: "orange-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
+  { "name": "美國隊長", "vice": "鷹眼", "number": 2, "party": "鋼鐵黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
+  { "name": "綠巨人", "vice": "黑寡婦", "number": 3, "party": "菠菜黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
 ]
 export const candidate_2016: candidateInfo[] = [
-  { "name": "茱莉花", "number": 1, "party": "復仇黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
-  { "name": "幸運草", "number": 2, "party": "菠菜黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
-  { "name": "宋江草", "number": 3, "party": "昆蟲黨", color: "orange-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
+  { "name": "茱莉花", "vice": "百合花", "number": 1, "party": "花朵黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
+  { "name": "幸運草", "vice": "四葉草", "number": 2, "party": "幸運黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
+  { "name": "宋江草", "vice": "金針菇", "number": 3, "party": "草食黨", color: "orange-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
 ]
 export const candidate_fake: candidateInfo[] = [
-  { "name": "神秘人 1 號", "number": 1, "party": "復仇黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
-  { "name": "神秘人 2 號", "number": 2, "party": "菠菜黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
-  { "name": "神秘人 3 號", "number": 3, "party": "昆蟲黨", color: "orange-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
+  { "name": "神秘人 1 ", "vice": "蜘蛛人", "number": 1, "party": "平行宇宙 1 黨", color: "blue-150", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
+  { "name": "神秘人 2 ", "vice": "蜘蛛人", "number": 2, "party": "平行宇宙 2 黨", color: "green-150", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
+  { "name": "神秘人 3 ", "vice": "蜘蛛人", "number": 3, "party": "平行宇宙 3 黨", color: "orange-150", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
 ]
 
 
