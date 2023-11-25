@@ -97,7 +97,7 @@ export default function TaiwanMap({ year }: { year: string }) {
   return (
     <>
       <div className=" h-full w-full bg-blue-50 flex justify-center items-center">
-        <div ref={mapRef} id="map" className=" h-full w-full flex justify-center items-center"></div>
+        <div ref={mapRef} id="map" className=" h-full w-full flex justify-center items-center overflow-hidden"></div>
       </div>
 
 

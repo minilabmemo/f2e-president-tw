@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <>
 
-      <main className="container  w-full  mx-auto bg-white h-screen">
+      <main className="3xl:container  w-full  mx-auto bg-white h-screen">
         <div className="content  mx-auto h-full flex justify-start flex-col items-center gap-6">
           <div className="mt-24 flex items-center flex-col">
             <div >  <Image src="/images/logo.svg" width="138" height="86" alt="Logo" /></div>

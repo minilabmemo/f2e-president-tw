@@ -55,11 +55,11 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
   const res = calcVoteResultByCity(year);
 
   return (
-    <div className="container mx-auto mt-2">
+    <div className=" mt-2">
       <table className="min-w-full border border-gray-300">
         <thead>
-          <tr className="bg-gray-200 text-[14px] font-normal">
-            <th className="border text-left p-2 font-normal">縣市</th>
+          <tr className="bg-gray-200 text-[14px] font-normal ">
+            <th className="border text-left p-2 font-normal ">縣市</th>
             <th className="border text-left p-2 font-normal">得票率</th>
             <th className="border text-left p-2 font-normal">最高票候選人</th>
             <th className="border text-left p-2 font-normal">總體投票數</th>
@@ -96,7 +96,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
 
   return <>
-    <main className="container h-full  mx-auto bg-white">
+    <main className="3xl:container h-full  mx-auto bg-white">
 
       <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center flex-col  justify-center gap-3 h-[10%] lg:h-[66px]  sm:flex-row sm:justify-between">
         <div className='flex justify-between gap-3 items-center'>
