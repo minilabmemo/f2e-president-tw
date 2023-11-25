@@ -91,7 +91,6 @@ const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
 
 export default function Page({ params }: { params: { year: string } }) {
   const [currentCity, setCurrentCity] = useState("")
-  const [isSelect, setIsSelect] = useState(false);
 
   const res = allVotes(params.year)
 
@@ -110,42 +109,42 @@ export default function Page({ params }: { params: { year: string } }) {
           </Link>
           <div className=' hidden sm:flex sm:ml-10 sm:items-center'>
             <div className="font-bold w-[100px]">選擇年份：</div>
-            <div className="relative inline-block">
-              <button className="flex  justify-evenly items-center bg-gray-150  w-[76px] rounded-[500px] p-4 lg:p-2 lg:w-[172px]   " onClick={() => { setIsSelect(!isSelect) }}>
-                <span className="text-xs sm:text-base">  {params.year}</span>
-                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
-
+            <div className="relative inline-block h-full">
+              <button className="group relative flex justify-evenly items-center bg-gray-150 w-[76px] rounded-[500px] p-4 lg:p-2 lg:w-[172px]">
+                <span className="text-xs sm:text-base">{params.year}</span>
+                <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6" /></span>
+                <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
+                  <ul className={`border border-gray-150 bg-white text-left`}>
+                    {Years.map((item, index) => (
+                      <div key={index}>
+                        <Link href={`/year/${item.year}`}>
+                          <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item.year}</li>
+                        </Link>
+                      </div>
+                    ))}
+                  </ul>
+                </div>
               </button>
-              <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	z-10 bg-white ${isSelect ? "" : "hidden"}`}>
-                {Years.map((item, index) => (
-                  <div key={index}>
-                    <Link href={`/year/${item.year}`}>
-                      <li className="py-2 px-4 cursor-pointer hover:bg-gray"> {item.year}</li>
 
-                    </Link>
-                  </div>)
-
-                )}
-              </ul>
             </div></div>
           <div className="options w-[30%] max-[423px] ">
             <div className="condition  w-full">
               <div className="relative inline-block w-1/2  bg-gray-150 rounded-l-[500px]">
-                <button className="flex  justify-evenly  items-center  w-full sm:w-[172px]  p-3 lg:p-2" onClick={() => { setIsSelect(!isSelect) }}>
+                <button className="flex  justify-evenly  items-center  w-full sm:w-[172px]  p-3 lg:p-2" >
                   <span className="text-xs sm:text-base">  全部</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
 
                 </button>
-                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-l-md	 bg-white ${isSelect ? "" : "hidden"}`}>
+                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-l-md	 bg-white`}>
 
                 </ul>
               </div>
               <div className="relative inline-block  w-1/2 bg-gray-150  rounded-r-[500px] " >
-                <button className="flex justify-evenly n items-center  w-full  sm:w-[172px] p-3  lg:p-2 lg:w-[100px]" onClick={() => { setIsSelect(!isSelect) }}>
+                <button className="flex justify-evenly n items-center  w-full  sm:w-[172px] p-3  lg:p-2 lg:w-[100px]">
                   <span className="text-xs sm:text-base">  選擇區域</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
                 </button>
-                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white ${isSelect ? "" : "hidden"}`}>
+                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
 
                 </ul>
               </div>
