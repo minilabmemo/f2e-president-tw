@@ -16,7 +16,7 @@ const PersonsResult = ({ result }: { result: OverallResult }) => {
 
   return (
     <div className='flex flex-col gap-3 min-h-[124px]'>
-      <div className=" flex flex-wrap justify-between items-center">
+      <div className=" flex flex-wrap justify-center items-center">
         {result.candidates
           .slice(0, 3)
           .map((item, index) => (
@@ -56,9 +56,9 @@ const CitiesResultTable = ({ year }: { year: string }) => {
 
   return (
     <div className=" mt-2 ">
-      <table className="min-w-full border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200 text-[14px] font-normal ">
+      <table className="min-w-full border-separate	border-spacing-0	 rounded-s overflow-hidden" >
+        <thead className='bg-gray-200 '>
+          <tr className="text-[14px] font-normal 	">
             <th className="border text-left p-2 font-normal ">地區</th>
             <th className="border text-left p-2 font-normal">得票率</th>
             <th className="border text-left p-2 font-normal hidden sm:table-cell">最高票候選人</th>
@@ -70,7 +70,7 @@ const CitiesResultTable = ({ year }: { year: string }) => {
           {res.map((row, index) => (
             <tr key={index} className="hover:bg-gray-100">
               <td className="border-b p-2 font-bold h-[76px]">{row.area}</td>
-              <td className="border-b  px-2  w-2/3   h-[76px] sm:w-1/5">
+              <td className="border-b  px-2  w-3/4   h-[76px] sm:w-1/5">
                 <div className="flex  h-full flex-col items-center justify-evenly">
                   <div className=" sm:hidden">
                     <div className="flex gap-2 items-center text-sm">最高票
@@ -122,7 +122,7 @@ export default function Page({ params }: { params: { year: string } }) {
           <div className='option-years col-span-1 md:col-span-1  lg:col-span-1 flex sm:ml-10 sm:items-center '>
             <div className="font-bold w-[100px] hidden lg:flex">選擇年份：</div>
             <div className="relative inline-block h-full">
-              <button className="group relative flex justify-evenly items-center bg-gray-150 w-[76px] rounded-[500px] px-3 py-1 sm:p-4 lg:p-2 lg:w-[172px]">
+              <button className="group relative flex justify-evenly items-center bg-gray-150 w-[76px] rounded-[500px] px-3 py-1 sm:p-3 lg:p-2 lg:w-[172px]">
                 <span className="text-xs sm:text-base">{params.year}</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6" /></span>
                 <div className={`absolute top-full p-2  right-3  w-auto sm:w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
@@ -200,12 +200,12 @@ export default function Page({ params }: { params: { year: string } }) {
           <div className=" text-2xl sm:h-[86px] font-bold sm:text-s28/lh150 pt-4"> 全臺縣市總統得票</div>
           <section className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
             <div className="font-bold text-xl/lh150 p-4  ">總統得票數</div>
-            <div className="flex items-stretch flex-wrap md:flex-nowrap justify-center sm:justify-evenly sm:p-2 gap-3  ">
-              <div className="flex rounded-xl bg-white  min-w-[311px]  w-1/2 flex-col gap-3 items-center px-4 py-4 sm:py-8 ">
+            <div className="flex items-stretch flex-wrap justify-center sm:justify-evenly sm:p-2  gap-3 md:gap-[1%] ">
+              <div className="flex rounded-xl bg-white  min-w-[311px]  w-full flex-col gap-3 items-center px-2 py-2 sm:py-8 md:basis-[48.5%]">
                 <PersonsResult result={res} />
 
               </div>
-              <div className="flex rounded-xl bg-white  min-w-[311px]   w-1/2  flex-col justify-center items-center flex-wrap md:flex-row px-4 py-8 ">
+              <div className="flex rounded-xl bg-white  min-w-[311px]   w-full  flex-col justify-center items-center flex-wrap md:flex-row px-4 py-8 md:basis-[48.5%]">
                 <div className="circle-chart sm:w-1/3  min-w-[124px]">
                   <div className="relative w-[124px] h-[124px]">
                     <div
@@ -230,8 +230,8 @@ export default function Page({ params }: { params: { year: string } }) {
 
                 </div>
 
-                <div className="flex w-full flex-col  justify-center gap-y-4 sm:w-2/3">
-                  <div className="flex w-full justify-start gap-x-10">
+                <div className="flex w-full flex-col  justify-center gap-y-4 sm:w-2/3 items-center">
+                  <div className="flex w-full  justify-center sm:justify-start gap-x-10">
                     <div className="flex flex-col w-max gap-y-1">
                       <div className="text-secondary text-sm">投票數</div>
                       <div className="text-primary text-base font-bold">{res.voteNumber}</div>
@@ -241,7 +241,7 @@ export default function Page({ params }: { params: { year: string } }) {
                       <div className="text-primary text-base font-bold">{res.voteRate.toFixed(2)}%</div>
                     </div>
                   </div>
-                  <div className="flex w-full justify-start gap-x-10">
+                  <div className="flex w-full justify-center sm:justify-start gap-x-10">
                     <div className="flex flex-col w-max gap-y-1">
                       <div className="text-secondary text-sm">有效投票數</div>
                       <div className="text-primary text-base font-bold">{res.ValidVoteNumber}</div>
