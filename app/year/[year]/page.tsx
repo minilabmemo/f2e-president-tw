@@ -9,7 +9,7 @@ import Link from "next/link";
 import React from 'react'
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
-import { calcVoteResultByCity } from '@/app/utility/city';
+import { calcVoteResultByCity, cities } from '@/app/utility/city';
 import { OverallResult, allVotes } from '@/app/utility/overall';
 import RateBar from '@/app/components/RateBar';
 const PersonsResult = ({ result }: { result: OverallResult }) => {
@@ -51,7 +51,7 @@ const PersonsResult = ({ result }: { result: OverallResult }) => {
 
 
 
-const CitiesResultTable: React.FC<{ year: string }> = ({ year }) => {
+const CitiesResultTable = ({ year }: { year: string }) => {
   const res = calcVoteResultByCity(year);
 
   return (
@@ -110,19 +110,22 @@ export default function Page({ params }: { params: { year: string } }) {
   return <>
     <main className="3xl:container   mx-auto bg-white">
 
-      <header className="border-[1px] border-gray-150 w-full px-4 sm:px-6 py-6 flex items-center  justify-center gap-3 h-auto lg:h-[66px]  sm:justify-between">
-        <div className='flex justify-between gap-3 items-center flex-col sm:flex-row'>
-          <Link href={`/`} className="flex justify-between w-max gap-x-2">
-            <div >  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
-            <div className='font-ms whitespace-nowrap text-xl sm:text-[28px]  '>台灣歷年總統 都幾？</div>
-          </Link>
-          <div className=' hidden sm:flex sm:ml-10 sm:items-center'>
-            <div className="font-bold w-[100px]">選擇年份：</div>
+      <header className="border-[1px] border-gray-150 w-full  gap-3 px-4 py-6 sm:px-6 sm:py-6  sm:flex sm:justify-between">
+
+        <div className='w-full grid grid-cols-[5fr_1fr] gap-3 items-center md:grid-cols-5 lg:grid-cols-3 lg:w-auto '>
+          <div className="col-span-5 py-2 md:col-span-2  lg:col-span-1 ">
+            <Link href={`/`} className=" flex w-max gap-x-2 ">
+              <div className='w-[37px] sm:w-auto'>  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
+              <div className='font-ms whitespace-nowrap text-[20px] sm:text-[28px]  '>台灣歷年總統 都幾？</div>
+            </Link>
+          </div>
+          <div className='option-years col-span-1 md:col-span-1  lg:col-span-1 flex sm:ml-10 sm:items-center '>
+            <div className="font-bold w-[100px] hidden lg:flex">選擇年份：</div>
             <div className="relative inline-block h-full">
-              <button className="group relative flex justify-evenly items-center bg-gray-150 w-[76px] rounded-[500px] p-4 lg:p-2 lg:w-[172px]">
+              <button className="group relative flex justify-evenly items-center bg-gray-150 w-[76px] rounded-[500px] px-3 py-1 sm:p-4 lg:p-2 lg:w-[172px]">
                 <span className="text-xs sm:text-base">{params.year}</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6" /></span>
-                <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
+                <div className={`absolute top-full p-2  right-3  w-auto sm:w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
                   <ul className={`border border-gray-150 bg-white text-left`}>
                     {Years.map((item, index) => (
                       <div key={index}>
@@ -135,27 +138,39 @@ export default function Page({ params }: { params: { year: string } }) {
                 </div>
               </button>
 
-            </div></div>
-          <div className="options w-full sm:w-[30%] max-[423px] ">
-            <div className="condition  w-full">
-              <div className="relative inline-block w-1/2  bg-gray-150 rounded-l-[500px]">
-                <button className="flex  justify-evenly  items-center  w-full sm:w-[172px]  p-3 lg:p-2" >
-                  <span className="text-xs sm:text-base">  全部</span>
+            </div>
+          </div>
+          <div className="options-area col-span-6 md:col-span-2  lg:col-span-1 w-full  ">
+            <div className="condition  w-full ">
+              <div className="relative inline-block w-1/2 py-1  sm:h-auto bg-gray-150 rounded-l-[500px]">
+                <button className="group relative flex  justify-evenly  items-center  w-full px-3 py-1 sm:w-[172px]  sm:p-3 lg:p-2" >
+                  <span className="text-xs sm:text-base leading-lh150">  全部縣市</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
-
+                  <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
+                    <ul className={`border border-gray-150 bg-white text-left`}>
+                      {cities.map((item, index) => (
+                        <div key={index}>
+                          <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item}</li>
+                        </div>
+                      ))}
+                    </ul>
+                  </div>
                 </button>
-                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-l-md	 bg-white`}>
-
-                </ul>
               </div>
-              <div className="relative inline-block  w-1/2 bg-gray-150  rounded-r-[500px] " >
-                <button className="flex justify-evenly n items-center  w-full  sm:w-[172px] p-3  lg:p-2 lg:w-[100px]">
+              <div className="relative inline-block w-1/2 py-1  sm:h-auto bg-gray-150  rounded-r-[500px] " >
+                <button className="group relative flex  justify-evenly  items-center  w-full px-3 py-1 sm:w-[172px]  sm:p-3 lg:p-2" >
                   <span className="text-xs sm:text-base">  選擇區域</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
+                  <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
+                    <ul className={`border border-gray-150 bg-white text-left`}>
+                      {cities.map((item, index) => (
+                        <div key={index}>
+                          <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item}</li>
+                        </div>
+                      ))}
+                    </ul>
+                  </div>
                 </button>
-                <ul className={`absolute top-full left-0 mt-1 w-40 border border-gray rounded-lg	 bg-white `}>
-
-                </ul>
               </div>
 
             </div>
@@ -163,10 +178,7 @@ export default function Page({ params }: { params: { year: string } }) {
           </div>
         </div>
 
-
-
-
-        <div className=" items-center gap-x-2 hidden sm:flex">
+        <div className="share items-center gap-x-2 hidden lg:flex">
           <span>分享</span>
           <div className="flex items-center gap-x-1">
             <div> <Image src="/images/icon_fb.svg" width="32" height="33" alt="icon_fb" /></div>
@@ -185,10 +197,10 @@ export default function Page({ params }: { params: { year: string } }) {
 
         <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
 
-          <div className="sm:h-[86px] font-bold text-s28/lh150 "> 全臺縣市總統得票</div>
-          <div className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
+          <div className=" text-2xl sm:h-[86px] font-bold sm:text-s28/lh150 pt-4"> 全臺縣市總統得票</div>
+          <section className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
             <div className="font-bold text-xl/lh150 p-4  ">總統得票數</div>
-            <div className="flex items-stretch flex-wrap sm:flex-nowrap justify-center sm:justify-evenly sm:p-2 gap-3  ">
+            <div className="flex items-stretch flex-wrap md:flex-nowrap justify-center sm:justify-evenly sm:p-2 gap-3  ">
               <div className="flex rounded-xl bg-white  min-w-[311px]  w-1/2 flex-col gap-3 items-center px-4 py-4 sm:py-8 ">
                 <PersonsResult result={res} />
 
@@ -244,10 +256,9 @@ export default function Page({ params }: { params: { year: string } }) {
 
               </div>
             </div>
-          </div>
+          </section>
 
-
-          <div className="result-party  rounded-xl">
+          <section className="result-party  rounded-xl">
 
             <div className="flex gap-3 items-center justify-center flex-col lg:flex-row">
               <div className="flex rounded-xl bg-white w-full lg:w-1/2 flex-col  px-4 py-8 border-[1px] border-gray-150">
@@ -264,12 +275,11 @@ export default function Page({ params }: { params: { year: string } }) {
 
               </div>
             </div>
-          </div>
-          <div className="result-city">
+          </section>
+          <section className="result-city">
             <div className="font-bold text-xl/lh150 ">各縣市投票總覽</div>
             <CitiesResultTable year={params.year}></CitiesResultTable>
-
-          </div>
+          </section>
         </div>
 
       </div>
