@@ -20,10 +20,11 @@ export const candidate_2016: candidateInfo[] = [
   { "name": "幸運草", "vice": "四葉草", "number": 2, "party": "菠菜黨", color: "green-150", fill: "#57D2A9", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
   { "name": "宋江草", "vice": "金針菇", "number": 3, "party": "復仇黨", color: "orange-150", fill: "#F4A76F", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
 ]
+
 export const candidate_fake: candidateInfo[] = [
-  { "name": "神秘人 1 ", "vice": "蜘蛛人", "number": 1, "party": "平行宇宙 1 黨", color: "blue-150", fill: "#8082FF", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
-  { "name": "神秘人 2 ", "vice": "蜘蛛人", "number": 2, "party": "平行宇宙 2 黨", color: "green-150", fill: "#57D2A9", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
-  { "name": "神秘人 3 ", "vice": "蜘蛛人", "number": 3, "party": "平行宇宙 3 黨", color: "orange-150", fill: "#F4A76F", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
+  { "name": "美國隊長", "vice": "鷹眼", "number": 1, "party": "鋼鐵黨", color: "blue-150", fill: "#8082FF", imageNode: <Image src="/images/role1.png" width={48} height={48} alt="role" />, },
+  { "name": "幸運草 ", "vice": "四葉草", "number": 2, "party": "菠菜黨", color: "green-150", fill: "#57D2A9", imageNode: <Image src="/images/role3.png" width={48} height={48} alt="role" />, },
+  { "name": "神秘人", "vice": "蜘蛛人", "number": 3, "party": "平行宇宙黨", color: "yellow-400", fill: "#facc15", imageNode: <Image src="/images/role2.png" width={48} height={48} alt="role" />, },
 ]
 
 
@@ -102,7 +103,7 @@ export const votingResults_2016: VotingResult[] = [
 
 
 export const votingResults_fake: VotingResult[] = [
-  { 行政區別: '總 計', 各組候選人得票情形: { 1: 5813365, 2: 6894744, 3: 7576861 }, 有效票數: 12284970, 無效票數: 163332, 投票數: 12448302, 投票率: 80.27 },
+  { 行政區別: '總 計', 各組候選人得票情形: { 1: 1576861, 2: 6894744, 3: 3813365 }, 有效票數: 12284970, 無效票數: 163332, 投票數: 12448302, 投票率: 80.27 },
   { 行政區別: '臺北市', 各組候選人得票情形: { 1: 546491, 2: 757383, 3: 1153804 }, 有效票數: 1457678, 無效票數: 22540, 投票數: 1480218, 投票率: 68.03 },
   { 行政區別: '新北市', 各組候選人得票情形: { 1: 709374, 2: 1165888, 3: 1252486 }, 有效票數: 2127748, 無效票數: 26481, 投票數: 2154229, 投票率: 67.23 },
   { 行政區別: '桃園市', 各組候選人得票情形: { 1: 369013, 2: 547573, 3: 2156518 }, 有效票數: 1073104, 無效票數: 11898, 投票數: 1085002, 投票率: 66.66 },
@@ -129,7 +130,7 @@ export const votingResults_fake: VotingResult[] = [
 
 
 
-export const getDataByYear = (year: string = "2020") => {
+export const getDataByYear = (year: string) => {
   let voteResults: VotingResult[] = votingResults_fake;
   let candidateInfos: candidateInfo[] = candidate_fake;
 
@@ -139,7 +140,24 @@ export const getDataByYear = (year: string = "2020") => {
   } else if (year === "2016") {
     voteResults = votingResults_2016;
     candidateInfos = candidate_2016;
+
+  } else if (year === "2012") { //FIXME data
+    voteResults = votingResults_fake;
+    candidateInfos = candidate_fake;
+  } else if (year === "2008") {
+    voteResults = votingResults_2020;
+    candidateInfos = candidate_2020;
+  } else if (year === "2004") {
+    voteResults = votingResults_2016;
+    candidateInfos = candidate_2016;
+  } else if (year === "2000") {
+    voteResults = votingResults_2020;
+    candidateInfos = candidate_2020;
+  } else if (year === "1996") {
+    voteResults = votingResults_2016;
+    candidateInfos = candidate_2016;
   }
+
 
   return { voteResults, candidateInfos };
 };

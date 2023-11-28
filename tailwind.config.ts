@@ -10,10 +10,10 @@ const config: Config = {
   safelist: [
 
     {
-      pattern: /bg-(red|green|blue|orange)-(100|150|200)/,
+      pattern: /bg-(red|green|blue|orange|yellow)-(100|150|200|300|400)/,
     },
     {
-      pattern: /fill-(red|green|blue|orange)-(100|150|200)/,
+      pattern: /fill-(red|green|blue|orange|yellow)-(100|150|200|300|400)/,
     },
   ],
   theme: {

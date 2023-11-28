@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { calcDatChart } from '../utility/chart';
+import { calcAllPartyInfos, calcDataChart } from '../utility/chart';
 import { getDataByYear } from '../utility/data';
 
 // const data = [
@@ -11,8 +11,8 @@ import { getDataByYear } from '../utility/data';
 //   { year: '2012', 菠菜黨：1890, 鋼鐵黨：4800, 復仇黨：2181, },
 //   { year: '2016', 菠菜黨：2390, 鋼鐵黨：3800, 復仇黨：2500, },
 //   { year: '2020', 菠菜黨：3490, 鋼鐵黨：4300, 復仇黨：2100, },];
-const data = calcDatChart("2020");
-const { voteResults, candidateInfos } = getDataByYear("2020"); //FIXME all party history
+const data = calcDataChart();
+const candidateInfos = calcAllPartyInfos();
 
 
 export default class Chart extends PureComponent {
@@ -22,18 +22,19 @@ export default class Chart extends PureComponent {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          width={500}
+          width={600}
           height={300}
           data={data}
           margin={{
             top: 5,
-            right: 30,
-            left: 20,
+            right: 5,
+            left: 5,
             bottom: 5,
           }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
-          <YAxis />
+          <YAxis type="number" domain={[0, 10000000]} width={100} />
+
           <Tooltip />
           <Legend />
           {candidateInfos

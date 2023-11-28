@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { calcDatChart } from '../utility/chart';
+import { calcAllPartyInfos, calcDataChart, calcDataChartRate } from '../utility/chart';
 import { getDataByYear } from '../utility/data';
 
 // const data = [
@@ -12,10 +12,11 @@ import { getDataByYear } from '../utility/data';
 //   { year: '2016', 菠菜黨：2390, 鋼鐵黨：3800, 復仇黨：2500, },
 //   { year: '2020', 菠菜黨：3490, 鋼鐵黨：4300, 復仇黨：2100, },];
 
-const data = calcDatChart("2020");
-const { voteResults, candidateInfos } = getDataByYear("2020");
+const data = calcDataChartRate();
+const candidateInfos = calcAllPartyInfos();
 export default class ChartLine extends PureComponent {
   static demoUrl = 'https://codesandbox.io/s/simple-line-chart-kec3v';
+
 
   render() {
     return (
@@ -26,14 +27,14 @@ export default class ChartLine extends PureComponent {
           data={data}
           margin={{
             top: 5,
-            right: 30,
-            left: 20,
+            right: 5,
+            left: 5,
             bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
-          <YAxis />
+          <YAxis unit="%" />
           <Tooltip />
           <Legend />
 
@@ -41,7 +42,7 @@ export default class ChartLine extends PureComponent {
             .map((item, index) =>
               <React.Fragment key={index} >
 
-                <Line type="monotone" dataKey={item.party} stroke={item.fill} activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={item.party} stroke={item.fill} activeDot={{ r: 8 }} connectNulls={true} />
               </React.Fragment>)
           }
         </LineChart>
