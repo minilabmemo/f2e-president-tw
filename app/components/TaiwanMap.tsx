@@ -17,34 +17,58 @@ interface GeoJSONFeature {
   properties: GeoJSONProperties;
   geometry: GeoJSONGeometry;
 }
-export default function TaiwanMap({ year }: { year: string }) {
+function calcScale() {
+  let mercatorScale, w = window.screen.width;
+  if (w > 1366) { mercatorScale = 11000; }
+  else if (w <= 1366 && w > 480) { mercatorScale = 9000; }
+  else { mercatorScale = 6000; }
+  mercatorScale = 9000// FIXME need test
+  return mercatorScale;
+}
+
+
+
+export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: string, reverse: boolean, mapPath: string }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const hasFetchedData = useRef(false); // 新增一個 ref 來追蹤是否已經獲取過數據
 
   useEffect(() => {
     const res = calcKeyVoteWinCity(year);
     if (!hasFetchedData.current) { // 只有在尚未獲取數據的情況下執行
-
+      let mercatorScale = calcScale();
+      const width = (mapRef.current)?.offsetWidth || 0;
+      const height = (mapRef.current)?.offsetHeight || 0;
       const svg = d3
         .select(mapRef.current)
         .append('svg')
         .attr('id', 'svg')
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0,0,800,1200")
+        .attr('viewBox', `0 0 ${width} ${height}`);
 
 
 
       const projection = d3.geoMercator()
-        .scale(15000)
-        .center([121.5, 25.0])
+        .scale(mercatorScale)
+        .center([121, 24])
+        .translate([width / 2, height / 2.5])
 
 
       const pathGenerator = d3.geoPath().projection(projection);
       hasFetchedData.current = true;
-      fetch("/files/taiwan.geojson")
+      fetch(mapPath)
         .then(response => response.json())
         .then(data => {
           const taiwanGeoJSON: GeoJSONFeature[] = data.features;
+          if (reverse) { //經測試某些方向會造成填充異常
+            taiwanGeoJSON.forEach(feature => {
+              feature.geometry.coordinates.reverse();
+              if (Array.isArray(feature.geometry.coordinates[0])) {
+                feature.geometry.coordinates.forEach(subArray => {
+                  subArray.reverse();
+                });
+              }
+            });
+          }
           svg
             .selectAll('path')
             .data(taiwanGeoJSON)
@@ -58,8 +82,24 @@ export default function TaiwanMap({ year }: { year: string }) {
               const color = `fill-${select?.value.winner.color || "gray-200"}`;
               return color
             })
+
             .attr('stroke', 'white')
             .attr('stroke-width', 2)
+            .on('mouseover', (event, data) => {
+              d3.select(`#city${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', 'fill-red-200')
+
+            })
+            .on('mouseout', (event, data) => {
+              const select = res.get(data.properties.COUNTYNAME);
+              const color = `fill-${select?.value.winner.color || "gray-200"}`;
+              d3.select(`#city${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', color)
+
+
+            })
             .on('click', (event, data) => {
               const keyToFind: string = data.properties.COUNTYNAME; // Ensure keyToFind is of type string
               const vote = res.get(data.properties.COUNTYNAME);

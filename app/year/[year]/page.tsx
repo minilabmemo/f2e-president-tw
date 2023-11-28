@@ -192,7 +192,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
       <div className="w-full  flex flex-col   lg:flex-row h-auto lg:h-[calc(100vh-66px)]">
         <div className="hidden lg:block lg:w-1/3 h-full">
-          <TaiwanMap year={params.year}></TaiwanMap>
+          <TaiwanMap year={params.year} reverse mapPath={"/files/tw.json"}></TaiwanMap>
         </div>
 
         <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
