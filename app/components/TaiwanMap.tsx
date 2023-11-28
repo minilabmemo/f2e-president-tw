@@ -22,13 +22,13 @@ function calcScale() {
   if (w > 1366) { mercatorScale = 11000; }
   else if (w <= 1366 && w > 480) { mercatorScale = 9000; }
   else { mercatorScale = 6000; }
-  mercatorScale = 9000// FIXME need test
+  mercatorScale = 12000// FIXME need test
   return mercatorScale;
 }
 
 
 
-export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: string, reverse: boolean, mapPath: string }) {
+export default function TaiwanMap({ year, reverse, mapPath }: { year: string, reverse: boolean, mapPath: string }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const hasFetchedData = useRef(false); // 新增一個 ref 來追蹤是否已經獲取過數據
 
@@ -59,8 +59,9 @@ export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: strin
         .then(response => response.json())
         .then(data => {
           const taiwanGeoJSON: GeoJSONFeature[] = data.features;
+          const filteredTaiwanGeoJSON = taiwanGeoJSON.filter(d => !["連江縣", "澎湖縣"].includes(d.properties.COUNTYNAME));
           if (reverse) { //經測試某些方向會造成填充異常
-            taiwanGeoJSON.forEach(feature => {
+            filteredTaiwanGeoJSON.forEach(feature => {
               feature.geometry.coordinates.reverse();
               if (Array.isArray(feature.geometry.coordinates[0])) {
                 feature.geometry.coordinates.forEach(subArray => {
@@ -71,7 +72,7 @@ export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: strin
           }
           svg
             .selectAll('path')
-            .data(taiwanGeoJSON)
+            .data(filteredTaiwanGeoJSON)
             .enter()
             .append('path')
             .attr('d', (d: any) => pathGenerator(d.geometry)!)
@@ -88,7 +89,7 @@ export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: strin
             .on('mouseover', (event, data) => {
               d3.select(`#city${data.properties.COUNTYCODE}`)
                 .attr('class', null)
-                .attr('class', 'fill-red-200')
+                .attr('class', 'fill-red-200 -translate-y-0.5')
 
             })
             .on('mouseout', (event, data) => {
@@ -96,7 +97,7 @@ export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: strin
               const color = `fill-${select?.value.winner.color || "gray-200"}`;
               d3.select(`#city${data.properties.COUNTYCODE}`)
                 .attr('class', null)
-                .attr('class', color)
+                .attr('class', `${color} -translate-y-0	`)
 
 
             })
@@ -117,7 +118,7 @@ export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: strin
             .text((d: any) => d.properties.COUNTYNAME)
             .attr('text-anchor', 'middle')
             .attr('alignment-baseline', 'middle')
-            .attr('class', 'text-base font-bold font-inter w-[28px] h-[20px] outlined-text  text-white')
+            .attr('class', 'text-xs font-bold font-inter w-[28px] h-[20px] outlined-text  text-white')
             .style("fill", "white")
 
 
@@ -136,7 +137,7 @@ export default function TaiwanMapFixed({ year, reverse, mapPath }: { year: strin
 
   return (
     <>
-      <div className=" h-full w-full bg-blue-50 flex justify-center items-center">
+      <div className=" h-full w-full bg-blue-50 flex justify-center items-center select-none">
         <div ref={mapRef} id="map" className=" h-full w-full flex justify-center items-center overflow-hidden"></div>
       </div>
 
