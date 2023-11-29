@@ -1,10 +1,6 @@
 
 "use client"
 import Image from 'next/image'
-import { Years } from '@/app/const'
-import { useEffect } from 'react';
-
-
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import TaiwanMap from '../../components/TaiwanMap';
@@ -16,6 +12,8 @@ import ChartLine from '@/app/components/ChartLine';
 import { calcVoteResultByCity, cities } from '@/app/utility/city';
 import { OverallResult, allVotes } from '@/app/utility/overall';
 import RateBar from '@/app/components/RateBar';
+import { Years } from '@/app/utility/data';
+import { getTownList } from '@/app/utility/town';
 const PersonsResult = ({ result }: { result: OverallResult }) => {
 
   return (
@@ -123,9 +121,9 @@ export default function Page({ params }: { params: { year: string } }) {
 
   const res = allVotes(params.year)
   const searchParams = useSearchParams()
-  const paramCity = searchParams.get('city')
+  const paramCity = searchParams.get('city') || ""
 
-
+  const townList = getTownList(paramCity);
   return <>
     <main className="3xl:container   mx-auto bg-white  h-screen flex flex-col">
 
@@ -187,13 +185,12 @@ export default function Page({ params }: { params: { year: string } }) {
                   <span className="text-xs sm:text-base">  選擇區域</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
                   <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
-                    <ul className={`border border-gray-150 bg-white text-left`}>
-                      <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">test</li>
-                      {/* {cities.map((item, index) => (
+                    <ul className={`border border-gray-150 bg-white text-left max-h-[30vh] overflow-y-auto`}>
+                      {townList.map((item, index) => (
                         <div key={index}>
                           <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item}</li>
                         </div>
-                      ))} */}
+                      ))}
                     </ul>
                   </div>
                 </button>
