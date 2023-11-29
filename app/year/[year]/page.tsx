@@ -2,7 +2,11 @@
 "use client"
 import Image from 'next/image'
 import { Years } from '@/app/const'
-import { useState } from 'react';
+import { useEffect } from 'react';
+
+
+import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import TaiwanMap from '../../components/TaiwanMap';
 import Link from "next/link";
 
@@ -52,6 +56,7 @@ const PersonsResult = ({ result }: { result: OverallResult }) => {
 
 
 const CitiesResultTable = ({ year }: { year: string }) => {
+  const router = useRouter();
   const res = calcVoteResultByCity(year);
 
   return (
@@ -64,6 +69,7 @@ const CitiesResultTable = ({ year }: { year: string }) => {
             <th className="border text-left p-2 font-normal hidden sm:table-cell">最高票候選人</th>
             <th className="border text-left p-2 font-normal hidden sm:table-cell">總體投票數</th>
             <th className="border text-left p-2 font-normal hidden sm:table-cell">總投票率</th>
+            <th className="border text-left p-2 font-normal hidden sm:table-cell"></th>
           </tr>
         </thead>
         <tbody>
@@ -94,6 +100,17 @@ const CitiesResultTable = ({ year }: { year: string }) => {
               <td className="border-b p-2 hidden sm:table-cell">{row.total.toLocaleString()}</td>
               <td className="border-b p-2 hidden sm:table-cell">{row.voteRate.toFixed(2)}%</td>
 
+              <td className="border-b hidden sm:table-cell" >
+                {index !== 0 && (
+                  <Link href={`/year/${year}?city=${row.area}`} className='block p-5'>  <Image src="/images/navigate_next.svg" alt="navigate_next" width="9" height="6" /></Link>)
+
+                  //   <button type="button" onClick={() => router.push(`/year/${params.year}?test=1`)}>
+                  //   Dashboard
+                  // </button>
+                }
+
+              </td>
+
             </tr>
           ))}
         </tbody>
@@ -105,6 +122,8 @@ const CitiesResultTable = ({ year }: { year: string }) => {
 export default function Page({ params }: { params: { year: string } }) {
 
   const res = allVotes(params.year)
+  const searchParams = useSearchParams()
+  const paramCity = searchParams.get('city')
 
 
   return <>
@@ -118,6 +137,7 @@ export default function Page({ params }: { params: { year: string } }) {
               <div className='w-[37px] sm:w-auto'>  <Image src="/images/logo_small.svg" width="53" height="34" alt="Logo" /></div>
               <div className='font-ms whitespace-nowrap text-[20px] sm:text-[28px]  '>台灣歷年總統 都幾？</div>
             </Link>
+
           </div>
           <div className='option-years col-span-1 md:col-span-1  lg:col-span-1 flex sm:ml-10 sm:items-center '>
             <div className="font-bold w-[100px] hidden lg:flex">選擇年份：</div>
@@ -192,12 +212,18 @@ export default function Page({ params }: { params: { year: string } }) {
 
       <div className="w-full  flex flex-col   lg:flex-row h-auto lg:h-[calc(100vh-66px)]">
         <div className="hidden lg:block lg:w-1/3 h-full">
-          <TaiwanMap year={params.year} reverse mapPath={"/files/tw.json"}></TaiwanMap>
+
+          {paramCity ? (<TaiwanMap year={params.year} reverse mapPath={"/files/TOWN.json"} area={paramCity}></TaiwanMap>) :
+            (<TaiwanMap year={params.year} reverse mapPath={"/files/tw.json"}></TaiwanMap>)}
         </div>
 
         <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
 
-          <div className=" text-2xl sm:h-[86px] font-bold sm:text-s28/lh150 pt-4"> 全臺縣市總統得票</div>
+          <div className=" text-2xl sm:h-[86px] font-bold sm:text-s28/lh150 pt-4">
+            {paramCity ? (<>
+              <Link href={`/year/${params.year}`} className=' flex gap-2 '><Image src="/images/back.svg" width="36" height="36" alt={'back'} /> {paramCity}
+              </Link>
+            </>) : "全臺縣市總統得票"}</div>
           <section className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
             <div className="font-bold text-xl/lh150 p-4  ">總統得票數</div>
             <div className="flex items-stretch flex-wrap justify-center sm:justify-evenly sm:p-2  gap-3 md:gap-[1%] ">
@@ -278,7 +304,8 @@ export default function Page({ params }: { params: { year: string } }) {
           </section>
           <section className="result-city">
             <div className="font-bold text-xl/lh150 ">各縣市投票總覽</div>
-            <CitiesResultTable year={params.year}></CitiesResultTable>
+            {paramCity ? (<></>) : (<CitiesResultTable year={params.year}></CitiesResultTable>)}
+
           </section>
         </div>
 
