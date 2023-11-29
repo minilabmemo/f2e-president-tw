@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { calcKeyVoteWinCity } from '../utility/city';
+import { useRouter } from 'next/navigation'
 interface GeoJSONProperties {
   COUNTYCODE: string;
   COUNTYNAME: string;
@@ -23,6 +24,9 @@ function calcScale(area: string | undefined) {
   else if (w <= 1366 && w > 480) { mercatorScale = 9000; }
   else { mercatorScale = 6000; }
   mercatorScale = 12000// FIXME need test
+  if (area) {
+    mercatorScale = 15000
+  }
 
   return mercatorScale;
 }
@@ -31,7 +35,7 @@ function calcScale(area: string | undefined) {
 
 export default function TaiwanMap({ year, reverse, mapPath, area }: { year: string, reverse: boolean, mapPath: string, area?: string }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const res = calcKeyVoteWinCity(year);
 
@@ -93,26 +97,31 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
           .attr('stroke', 'white')
           .attr('stroke-width', 2)
           .on('mouseover', (event, data) => {
-            d3.select(`#city${data.properties.COUNTYCODE}`)
-              .attr('class', null)
-              .attr('class', 'fill-red-200 -translate-y-0.5')
+            if (!area) {
+              d3.select(`#city${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', 'fill-red-200 -translate-y-0.5')
+            }
 
           })
           .on('mouseout', (event, data) => {
-            const select = res.get(data.properties.COUNTYNAME);
-            const color = `fill-${select?.value.winner.color || "gray-200"}`;
-            d3.select(`#city${data.properties.COUNTYCODE}`)
-              .attr('class', null)
-              .attr('class', `${color} -translate-y-0	`)
+            if (!area) {
+              const select = res.get(data.properties.COUNTYNAME);
+              const color = `fill-${select?.value.winner.color || "gray-200"}`;
+              d3.select(`#city${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', `${color} -translate-y-0	`)
+            }
 
 
           })
           .on('click', (event, data) => {
-            const keyToFind: string = data.properties.COUNTYNAME; // Ensure keyToFind is of type string
-            const vote = res.get(data.properties.COUNTYNAME);
-            const color = `fill-${vote?.value.winner.color || "gray-200"}`;
-            console.log(color);
-            console.log(res.get(keyToFind));
+
+            if (!area) {
+              router.push(`/year/${year}?city=${data.properties.COUNTYNAME}`)
+            }
+
+
           });
         svg
           .selectAll('text')
