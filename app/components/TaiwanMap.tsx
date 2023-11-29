@@ -26,6 +26,12 @@ function calcScale(area: string | undefined) {
   mercatorScale = 12000// FIXME need test
   if (area) {
     mercatorScale = 15000
+    const minCities = ["臺北市", "基隆市", "嘉義市", "新竹市"];
+
+    if (minCities.includes(area)) {
+      mercatorScale = 60000
+      console.log("🚀 ~ file: TaiwanMap.tsx:33 ~ calcScale ~ mercatorScale:", mercatorScale)
+    }
   }
 
   return mercatorScale;
@@ -50,12 +56,11 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
       .attr('id', 'svg')
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr('viewBox', `0 0 ${width} ${height}`);
-
-
-
+    const centerW = 121;
+    const centerH = 24;
     const projection = d3.geoMercator()
       .scale(mercatorScale)
-      .center([121, 24])
+      .center([centerW, centerH])
       .translate([width / 2, height / 2.5])
 
 
@@ -80,11 +85,37 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
             }
           });
         }
+        let xOffset = 0;
+        let yOffset = 0;
+        let resetScale = 1;
+        if (area) { //調整中心點位移
+          const bounds = d3.geoPath().bounds(alltaiwanGeoJSON);
+          const [minX, minY] = projection(bounds[0]);
+          const [maxX, maxY] = projection(bounds[1]);
+          const areaWidth = maxX - minX;
+          const areaHeight = maxY - minY;
+          const areaPercent = areaWidth / width;
+          console.log("🚀 ~ file: TaiwanMap.tsx:91 ~ useEffect ~ areaPercent:", areaPercent)
+          if (areaPercent < 0.1) {
+            resetScale = 100;
+            console.log("🚀 ~ file: TaiwanMap.tsx:95 ~ useEffect ~ resetScale:", resetScale)
+          }
+
+
+          const centerX = (bounds[0][0] + bounds[1][0]) / 2;
+          const centerY = (bounds[0][1] + bounds[1][1]) / 2;
+          const centerScreenCoordinates = projection([centerW, centerH]);
+          const mapHCoordinates = projection([centerX, centerY]);
+          xOffset = centerScreenCoordinates[0] - mapHCoordinates[0]
+          yOffset = centerScreenCoordinates[1] - mapHCoordinates[1]
+
+        }
         svg
           .selectAll('path')
           .data(filteredTaiwanGeoJSON)
           .enter()
           .append('path')
+          .attr('transform', `translate(${xOffset}, ${yOffset}) `)
           .attr('d', (d: any) => pathGenerator(d.geometry)!)
           .attr('id', (d: any) => 'city' + d.properties.COUNTYCODE)
           .attr('name', (d: any) => 'city' + d.properties.COUNTYNAME)
@@ -128,6 +159,10 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
           .data(taiwanGeoJSON)
           .enter()
           .append('text')
+          .attr('transform', (d: any) => {
+            return `scale(${resetScale})`;
+          })
+          .attr('transform', `translate(${xOffset}, ${yOffset})`)
           .attr('x', (d: any) => pathGenerator.centroid(d.geometry)[0])
           .attr('y', (d: any) => pathGenerator.centroid(d.geometry)[1])
           .text((d: any) => { return area ? d.properties.TOWNNAME : d.properties.COUNTYNAME; })
