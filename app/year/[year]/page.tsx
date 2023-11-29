@@ -127,9 +127,9 @@ export default function Page({ params }: { params: { year: string } }) {
 
 
   return <>
-    <main className="3xl:container   mx-auto bg-white">
+    <main className="3xl:container   mx-auto bg-white  h-screen flex flex-col">
 
-      <header className="border-[1px] border-gray-150 w-full  gap-3 px-4 py-6 sm:px-6 sm:py-6  sm:flex sm:justify-between">
+      <header className="flex-shrink-0  border-[1px] border-gray-150 w-full  gap-3 px-4 py-6 sm:px-6 sm:py-6  sm:flex sm:justify-between">
 
         <div className='w-full grid grid-cols-[5fr_1fr] gap-3 items-center md:grid-cols-5 lg:grid-cols-3 lg:w-auto '>
           <div className="col-span-5 py-2 md:col-span-2  lg:col-span-1 ">
@@ -210,9 +210,8 @@ export default function Page({ params }: { params: { year: string } }) {
         </div>
       </header>
 
-      <div className="w-full  flex flex-col   lg:flex-row h-auto lg:h-[calc(100vh-66px)]">
-        <div className="hidden lg:block lg:w-1/3 h-full">
-
+      <div className=" flex-grow overflow-y-auto w-full  flex flex-col   lg:flex-row   ">
+        <div className="hidden lg:block lg:w-1/3">
           {paramCity ? (<TaiwanMap year={params.year} reverse mapPath={"/files/TOWN.json"} area={paramCity}></TaiwanMap>) :
             (<TaiwanMap year={params.year} reverse mapPath={"/files/tw.json"}></TaiwanMap>)}
         </div>

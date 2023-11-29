@@ -30,7 +30,7 @@ function calcScale(area: string | undefined) {
   if (w > 1366) { mercatorScale = 11000; }
   else if (w <= 1366 && w > 480) { mercatorScale = 9000; }
   else { mercatorScale = 6000; }
-  mercatorScale = 12000// FIXME need test
+  mercatorScale = 10000// FIXME need test
   if (area) {
     mercatorScale = 15000
     const minCities = ["臺北市", "基隆市", "嘉義市", ""];
@@ -202,8 +202,8 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
 
   return (
     <>
-      <div className=" h-full w-full bg-blue-50 flex justify-center items-center select-none">
-        <div ref={mapRef} id="map" className=" h-full w-full flex justify-center items-center overflow-hidden"></div>
+      <div className="h-full w-full  bg-blue-50 flex justify-center items-center select-none">
+        <div ref={mapRef} id="map" className="h-full w-full  flex justify-center items-center overflow-hidden"></div>
       </div>
 
 
