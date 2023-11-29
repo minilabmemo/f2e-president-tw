@@ -5,10 +5,13 @@ interface GeoJSONFeature {
 }
 interface GeoJSONProperties {
   TOWNID: string;
+  TOWNNAME: string;
+  TOWNCODE: string;
+  TOWNENG: string;
   COUNTYCODE: string;
   COUNTYNAME: string;
-  COUNTYENG: string;
-  TOWNENG: string;
+
+  COUNTYID: string;
 }
 
 const townData: GeoJSONFeature[] = [
