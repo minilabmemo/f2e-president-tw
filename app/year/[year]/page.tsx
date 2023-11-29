@@ -184,7 +184,8 @@ export default function Page({ params }: { params: { year: string } }) {
                 <button className="group relative flex  justify-evenly  items-center  w-full px-3 py-1 sm:w-[172px]  sm:p-3 lg:p-2" >
                   <span className="text-xs sm:text-base">  選擇區域</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
-                  <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
+
+                  {townList.length !== 0 && (<div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
                     <ul className={`border border-gray-150 bg-white text-left max-h-[30vh] overflow-y-auto`}>
                       {townList.map((item, index) => (
                         <div key={index}>
@@ -192,7 +193,8 @@ export default function Page({ params }: { params: { year: string } }) {
                         </div>
                       ))}
                     </ul>
-                  </div>
+                  </div>)}
+
                 </button>
               </div>
 

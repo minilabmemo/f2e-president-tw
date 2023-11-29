@@ -32,11 +32,14 @@ function calcScale(area: string | undefined) {
   else { mercatorScale = 6000; }
   mercatorScale = 10000// FIXME need test
   if (area) {
-    mercatorScale = 15000
-    const minCities = ["臺北市", "基隆市", "嘉義市", "連江縣", "澎湖縣"];
-    if (minCities.includes(area)) {
+    mercatorScale = 25000
+    const mCities = ["臺南市", "雲林縣", "苗栗縣", "彰化縣"];
+    if (mCities.includes(area)) {
+      mercatorScale = 30000
+    }
+    const sCities = ["臺北市", "基隆市", "新竹市", "嘉義市", "連江縣", "澎湖縣"];
+    if (sCities.includes(area)) {
       mercatorScale = 60000
-
     }
     const xsCities = ["金門縣"];
     if (xsCities.includes(area)) {
