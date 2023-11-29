@@ -44,12 +44,12 @@ export default function Home() {
         </div>
 
         <div className=" container fixed bottom-0 flex   -translate-x-1/2	left-1/2 justify-center ">
-          <div className='hidden md:block' >        <Image src="/images/person1.png" width="280" height="258" alt="person" /></div>
-          <div className='hidden md:block'>         <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
-          <div>         <Image src="/images/person3.png" width="280" height="258" alt="person" /></div>
-          <div>         <Image src="/images/person4.png" width="280" height="258" alt="person" /></div>
-          <div>         <Image src="/images/person5.png" width="280" height="258" alt="person" /></div>
-          <div>         <Image src="/images/person6.png" width="280" height="258" alt="person" /></div>
+          <div className='hover:-translate-y-4 hidden md:block' >        <Image src="/images/person1.png" width="280" height="258" alt="person" /></div>
+          <div className='hover:-translate-y-4 hidden md:block'>         <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
+          <div className='hover:-translate-y-4'>         <Image src="/images/person3.png" width="280" height="258" alt="person" /></div>
+          <div className='hover:-translate-y-4'>         <Image src="/images/person4.png" width="280" height="258" alt="person" /></div>
+          <div className='hover:-translate-y-4'>         <Image src="/images/person5.png" width="280" height="258" alt="person" /></div>
+          <div className='hover:-translate-y-4'>         <Image src="/images/person6.png" width="280" height="258" alt="person" /></div>
 
         </div>
       </main >

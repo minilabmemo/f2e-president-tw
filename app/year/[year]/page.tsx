@@ -146,7 +146,7 @@ export default function Page({ params }: { params: { year: string } }) {
                 <span className="text-xs sm:text-base">{params.year}</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6" /></span>
                 <div className={`absolute top-full p-2  right-3  w-auto sm:w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
-                  <ul className={`border border-gray-150 bg-white text-left`}>
+                  <ul className={`border border-gray-150 bg-white text-left `}>
                     {Years.map((item, index) => (
                       <div key={index}>
                         <Link href={`/year/${item.year}`}>
@@ -164,13 +164,18 @@ export default function Page({ params }: { params: { year: string } }) {
             <div className="condition  w-full ">
               <div className="relative inline-block w-1/2 py-1  sm:h-auto bg-gray-150 rounded-l-[500px]">
                 <button className="group relative flex  justify-evenly  items-center  w-full px-3 py-1 sm:w-[172px]  sm:p-3 lg:p-2" >
-                  <span className="text-xs sm:text-base leading-lh150">  全部縣市</span>
+                  <span className="text-xs sm:text-base leading-lh150">  {paramCity ? paramCity : "全部縣市"}</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
                   <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
-                    <ul className={`border border-gray-150 bg-white text-left`}>
+                    <ul className={`border border-gray-150 bg-white text-left max-h-[30vh] overflow-y-auto`}>
+                      <Link href={`/year/${params.year}`}>
+                        <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{"全部縣市"}</li>
+                      </Link>
                       {cities.map((item, index) => (
                         <div key={index}>
-                          <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item}</li>
+                          <Link href={`/year/${params.year}?city=${item}`}>
+                            <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item}</li>
+                          </Link>
                         </div>
                       ))}
                     </ul>
@@ -183,11 +188,12 @@ export default function Page({ params }: { params: { year: string } }) {
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
                   <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
                     <ul className={`border border-gray-150 bg-white text-left`}>
-                      {cities.map((item, index) => (
+                      <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">test</li>
+                      {/* {cities.map((item, index) => (
                         <div key={index}>
                           <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{item}</li>
                         </div>
-                      ))}
+                      ))} */}
                     </ul>
                   </div>
                 </button>
@@ -219,10 +225,11 @@ export default function Page({ params }: { params: { year: string } }) {
         <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
 
           <div className=" text-2xl sm:h-[86px] font-bold sm:text-s28/lh150 pt-4">
-            {paramCity ? (<>
-              <Link href={`/year/${params.year}`} className=' flex gap-2 '><Image src="/images/back.svg" width="36" height="36" alt={'back'} /> {paramCity}
-              </Link>
-            </>) : "全臺縣市總統得票"}</div>
+            {paramCity ? (<div className=' flex gap-2 '>
+              <Link href={`/year/${params.year}`} ><Image src="/images/back.svg" width="36" height="36" alt={'back'} />
+
+              </Link>{paramCity}
+            </div>) : "全臺縣市總統得票"}</div>
           <section className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
             <div className="font-bold text-xl/lh150 p-4  ">總統得票數</div>
             <div className="flex items-stretch flex-wrap justify-center sm:justify-evenly sm:p-2  gap-3 md:gap-[1%] ">

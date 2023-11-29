@@ -33,13 +33,18 @@ function calcScale(area: string | undefined) {
   mercatorScale = 10000// FIXME need test
   if (area) {
     mercatorScale = 15000
-    const minCities = ["臺北市", "基隆市", "嘉義市", ""];
-
+    const minCities = ["臺北市", "基隆市", "嘉義市", "連江縣", "澎湖縣"];
     if (minCities.includes(area)) {
       mercatorScale = 60000
-      console.log("🚀 ~ file: TaiwanMap.tsx:33 ~ calcScale ~ mercatorScale:", mercatorScale)
+
+    }
+    const xsCities = ["金門縣"];
+    if (xsCities.includes(area)) {
+      mercatorScale = 20000
+
     }
   }
+
 
   return mercatorScale;
 }
@@ -81,7 +86,12 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
           : { type: 'FeatureCollection', features: data.features };
 
         const taiwanGeoJSON = alltaiwanGeoJSON.features;
-        const filteredTaiwanGeoJSON = taiwanGeoJSON.filter(d => !["連江縣", "澎湖縣"].includes(d.properties.COUNTYNAME));
+        let filteredTaiwanGeoJSON = taiwanGeoJSON;
+        if (!area) {
+          filteredTaiwanGeoJSON = taiwanGeoJSON.filter(d => !["連江縣", "澎湖縣", "金門縣"].includes(d.properties.COUNTYNAME));
+        }
+
+
         if (reverse) { //經測試某些方向會造成填充異常
           filteredTaiwanGeoJSON.forEach(feature => {
             feature.geometry.coordinates.reverse();
