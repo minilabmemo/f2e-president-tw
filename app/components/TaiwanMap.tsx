@@ -128,7 +128,6 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
                 .attr('class', null)
                 .attr('class', 'fill-red-200 -translate-y-0.5')
             }
-
           })
           .on('mouseout', (event, data) => {
             if (!area) {
@@ -138,31 +137,54 @@ export default function TaiwanMap({ year, reverse, mapPath, area }: { year: stri
                 .attr('class', null)
                 .attr('class', `${color} -translate-y-0	`)
             }
-
-
           })
           .on('click', (event, data) => {
-
             if (!area) {
               router.push(`/year/${year}?city=${data.properties.COUNTYNAME}`)
             }
-
-
           });
         svg
           .selectAll('text')
           .data(taiwanGeoJSON)
           .enter()
           .append('text')
-
           .attr('transform', `translate(${xOffset}, ${yOffset})`)
           .attr('x', (d: any) => pathGenerator.centroid(d.geometry)[0])
           .attr('y', (d: any) => pathGenerator.centroid(d.geometry)[1])
           .text((d: any) => { return area ? d.properties.TOWNNAME : d.properties.COUNTYNAME; })
+          .attr('id', (d: any) => 'city-text' + d.properties.COUNTYCODE)
           .attr('text-anchor', 'middle')
           .attr('alignment-baseline', 'middle')
           .attr('class', 'text-xs font-bold font-inter w-[28px] h-[20px] outlined-text  text-white')
           .style("fill", "white")
+          .on('mouseover', (event, data) => {
+            if (!area) {
+              d3.select(`#city${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', 'fill-red-200 -translate-y-0.5')
+              d3.select(`#city-text${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', 'text-s font-bold font-inter w-[28px] h-[20px] outlined-text  text-white')
+            }
+          })
+          .on('mouseout', (event, data) => {
+            if (!area) {
+              const select = res.get(data.properties.COUNTYNAME);
+              const color = `fill-${select?.value.winner.color || "gray-200"}`;
+              d3.select(`#city${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', `${color} -translate-y-0	`)
+              d3.select(`#city-text${data.properties.COUNTYCODE}`)
+                .attr('class', null)
+                .attr('class', 'text-xs font-bold font-inter w-[28px] h-[20px] outlined-text  text-white')
+
+            }
+          })
+          .on('click', (event, data) => {
+            if (!area) {
+              router.push(`/year/${year}?city=${data.properties.COUNTYNAME}`)
+            }
+          });
 
 
 
