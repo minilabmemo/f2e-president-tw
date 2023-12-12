@@ -17,17 +17,17 @@ import { getTownList } from '@/app/utility/town';
 const PersonsResult = ({ result }: { result: OverallResult }) => {
 
   return (
-    <div className='flex flex-col gap-3 min-h-[124px]'>
-      <div className=" flex flex-wrap justify-center items-center">
+    <div className='flex flex-col gap-2 '>
+      <div className=" flex flex-wrap gap-1">
         {result.candidates
           .slice(0, 3)
           .map((item, index) => (
-            <div key={index} className="person flex w-[170px] h-[70px] justify-around items-center ">
-              <div className='w-max'> {item.imageNode}</div>
-              <div className="flex flex-col w-max gap-1">
+            <div key={index} className="person flex-1 flex  flex-wrap justify-around items-center gap-1">
+              <div className=' '> {item.imageNode}</div>
+              <div className=" flex flex-col  gap-1">
                 <div className='text-secondary text-xs/lh150'>{item.party}</div>
                 <div className='text-primary text-base/lh150'><span className="font-bold">{item.name}</span> / <span className="text-sm">{item.vice}</span></div>
-                <div className='text-primary text-base/lh150 font-bold'> <span>{item.total}</span> 票</div>
+                <div className='text-primary text-xs/lh150 font-bold'> <span>{item.total}</span> 票</div>
               </div>
             </div>
 
@@ -139,7 +139,7 @@ export default function Page({ params }: { params: { year: string } }) {
           </div>
           <div className='option-years col-span-1 md:col-span-1  lg:col-span-1 flex sm:ml-10 sm:items-center '>
             <div className="font-bold w-[100px] hidden lg:flex">選擇年份：</div>
-            <div className="relative inline-block h-full">
+            <div className="relative inline-block">
               <button className="group relative flex justify-evenly items-center bg-gray-150 w-[76px] rounded-[500px] px-3 py-1 sm:p-3 lg:p-2 lg:w-[172px]">
                 <span className="text-xs sm:text-base">{params.year}</span>
                 <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6" /></span>
@@ -160,12 +160,12 @@ export default function Page({ params }: { params: { year: string } }) {
           </div>
           <div className="options-area col-span-6 md:col-span-2  lg:col-span-1 w-full  ">
             <div className="condition  w-full ">
-              <div className="relative inline-block w-1/2 py-1  sm:h-auto bg-gray-150 rounded-l-[500px]">
+              <div className="relative inline-block w-1/2 py-1   bg-gray-150 rounded-l-[500px]">
                 <button className="group relative flex  justify-evenly  items-center  w-full px-3 py-1 sm:w-[172px]  sm:p-3 lg:p-2" >
                   <span className="text-xs sm:text-base leading-lh150">  {paramCity ? paramCity : "全部縣市"}</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
                   <div className={`absolute top-full p-2  left-0  w-40  rounded-lg z-10 bg-transparent hidden group-hover:block`}>
-                    <ul className={`border border-gray-150 bg-white text-left max-h-[30vh] overflow-y-auto`}>
+                    <ul className={`border border-gray-150 bg-white text-left  overflow-y-auto`}>
                       <Link href={`/year/${params.year}`}>
                         <li className="py-2 px-4 cursor-pointer hover:bg-gray-150">{"全部縣市"}</li>
                       </Link>
@@ -180,7 +180,7 @@ export default function Page({ params }: { params: { year: string } }) {
                   </div>
                 </button>
               </div>
-              <div className="relative inline-block w-1/2 py-1  sm:h-auto bg-gray-150  rounded-r-[500px] " >
+              <div className="relative inline-block w-1/2 py-1   bg-gray-150  rounded-r-[500px] " >
                 <button className="group relative flex  justify-evenly  items-center  w-full px-3 py-1 sm:w-[172px]  sm:p-3 lg:p-2" >
                   <span className="text-xs sm:text-base">  選擇區域</span>
                   <span className="w-5 h-5 flex justify-center items-center"><Image src="/images/expand_more.svg" alt="expand_more" width="9" height="6"  ></Image></span>
@@ -223,7 +223,7 @@ export default function Page({ params }: { params: { year: string } }) {
 
         <div className=" overflow-y-scroll w-full lg:w-2/3 px-4 sm:px-16 pb-16 flex flex-col gap-y-6">
 
-          <div className=" text-2xl sm:h-[86px] font-bold sm:text-s28/lh150 pt-4">
+          <div className=" text-2xl  font-bold sm:text-s28/lh150 pt-4">
             {paramCity ? (<div className=' flex gap-2 '>
               <Link href={`/year/${params.year}`} ><Image src="/images/back.svg" width="36" height="36" alt={'back'} />
 
@@ -231,13 +231,13 @@ export default function Page({ params }: { params: { year: string } }) {
             </div>) : "全臺縣市總統得票"}</div>
           <section className="result-person  bg-gray-50 rounded-xl p-2 sm:p-3 flex flex-col">
             <div className="font-bold text-xl/lh150 p-4  ">總統得票數</div>
-            <div className="flex items-stretch flex-wrap justify-center sm:justify-evenly sm:p-2  gap-3 md:gap-[1%] ">
-              <div className="flex rounded-xl bg-white  min-w-[311px]  w-full flex-col gap-3 items-center px-2 py-2 sm:py-8 md:basis-[48.5%]">
+            <div className="flex items-stretch flex-col sm:flex-row justify-center    gap-3 ">
+              <div className="flex-1 flex rounded-xl bg-white flex-col  justify-center p-4">
                 <PersonsResult result={res} />
 
               </div>
-              <div className="flex rounded-xl bg-white  min-w-[311px]   w-full  flex-col justify-center items-center flex-wrap md:flex-row px-4 py-8 md:basis-[48.5%]">
-                <div className="circle-chart sm:w-1/3  min-w-[124px]">
+              <div className=" flex-1  flex rounded-xl bg-white  flex-col justify-center items-center md:flex-row px-8 py-8 ">
+                <div className="flex-1 circle-chart flex justify-center  items-center ">
                   <div className="relative w-[124px] h-[124px]">
                     <div
                       style={{
@@ -261,23 +261,23 @@ export default function Page({ params }: { params: { year: string } }) {
 
                 </div>
 
-                <div className="flex w-full flex-col  justify-center gap-y-4 sm:w-2/3 items-center">
-                  <div className="flex w-full  justify-center sm:justify-start gap-x-10">
-                    <div className="flex flex-col w-max gap-y-1">
+                <div className="flex-[2] flex flex-col justify-start gap-y-4 items-center">
+                  <div className="flex   justify-center gap-x-12">
+                    <div className="flex flex-col  gap-y-1">
                       <div className="text-secondary text-sm">投票數</div>
                       <div className="text-primary text-base font-bold">{res.voteNumber}</div>
                     </div>
-                    <div className="flex flex-col w-max">
+                    <div className="flex flex-col ">
                       <div className="text-secondary text-sm">投票率</div>
                       <div className="text-primary text-base font-bold">{res.voteRate.toFixed(2)}%</div>
                     </div>
                   </div>
-                  <div className="flex w-full justify-center sm:justify-start gap-x-10">
-                    <div className="flex flex-col w-max gap-y-1">
+                  <div className="flex  gap-x-10">
+                    <div className="flex flex-col  gap-y-1">
                       <div className="text-secondary text-sm">有效投票數</div>
                       <div className="text-primary text-base font-bold">{res.ValidVoteNumber}</div>
                     </div>
-                    <div className="flex flex-col w-max">
+                    <div className="flex flex-col ">
                       <div className="text-secondary text-sm">無效投票數</div>
                       <div className="text-primary text-base font-bold">{res.InvalidVoteNumber}</div>
                     </div>
