@@ -3,17 +3,17 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
-import TaiwanMap from '../../components/TaiwanMap';
+import TaiwanMap from '@/app/components/TaiwanMap';
 import Link from "next/link";
 
 import React from 'react'
 import Chart from '@/app/components/Chart';
 import ChartLine from '@/app/components/ChartLine';
-import { calcVoteResultByCity, cities } from '@/app/utility/city';
-import { OverallResult, allVotes } from '@/app/utility/overall';
+import { calcVoteResultByCity, cities } from '@/app/utils/city';
+import { OverallResult, allVotes } from '@/app/utils/overall';
 import RateBar from '@/app/components/RateBar';
-import { Years } from '@/app/utility/data';
-import { getTownList } from '@/app/utility/town';
+import { Years } from '@/app/utils/data';
+import { getTownList } from '@/app/utils/town';
 const PersonsResult = ({ result }: { result: OverallResult }) => {
 
   return (

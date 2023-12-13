@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import Link from "next/link";
 import React from 'react'
-import { Years } from './utility/data';
+import { Years } from './utils/data';
 
 
 function YearList() {

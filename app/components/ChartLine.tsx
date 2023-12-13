@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { calcAllPartyInfos, calcDataChart, calcDataChartRate } from '../utility/chart';
-import { getDataByYear } from '../utility/data';
+import { calcAllPartyInfos, calcDataChart, calcDataChartRate } from '@/app/utils/chart';
+
 
 // const data = [
 //   { year: '1996', 菠菜黨：4000, 鋼鐵黨：2400, 復仇黨：2400, },
