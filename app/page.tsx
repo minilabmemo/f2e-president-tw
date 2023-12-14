@@ -1,5 +1,5 @@
-import Image from 'next/image'
 
+import Image from 'next/image'
 import Link from "next/link";
 import React from 'react'
 import { Years } from './utils/data';
@@ -45,23 +45,23 @@ export default function Home() {
 
         <div className=" container fixed bottom-0 flex   -translate-x-1/2	left-1/2 justify-center ">
           <div className='group hover:-translate-y-4 hidden flex-col md:flex items-end ' >
-            <div className="opacity-0 group-hover:opacity-100">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
+            <div className="opacity-0 group-hover:opacity-100 translate-y-9 ">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
             <Image src="/images/person1.png" width="280" height="258" alt="person" />
           </div>
-          <div className='group hover:-translate-y-4 hidden flex-col md:flex items-end ' >
-            <div className="opacity-0 group-hover:opacity-100">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
+          <div className=' group hover:-translate-y-4 hidden flex-col md:flex items-end ' >
+            <div className="opacity-0 group-hover:opacity-100  translate-y-9">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
             <Image src="/images/person2.png" width="280" height="258" alt="person" /></div>
           <div className='group hover:-translate-y-4  flex-col flex items-end ' >
-            <div className="opacity-0 group-hover:opacity-100">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
+            <div className="opacity-0 group-hover:opacity-100 translate-y-9">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
             <Image src="/images/person3.png" width="280" height="258" alt="person" /></div>
           <div className='group hover:-translate-y-4  flex-col flex items-end ' >
-            <div className="opacity-0 group-hover:opacity-100">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
+            <div className="opacity-0 group-hover:opacity-100 translate-y-9">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
             <Image src="/images/person4.png" width="280" height="258" alt="person" /></div>
           <div className='group hover:-translate-y-4  flex-col flex items-end ' >
-            <div className="opacity-0 group-hover:opacity-100">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
+            <div className="opacity-0 group-hover:opacity-100 translate-y-9">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
             <Image src="/images/person5.png" width="280" height="258" alt="person" /></div>
           <div className='group hover:-translate-y-4  flex-col flex items-end ' >
-            <div className="opacity-0 group-hover:opacity-100">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
+            <div className="opacity-0 group-hover:opacity-100 translate-y-9">    <Image src="/images/brand.png" width="200" height="200" alt="brand" /></div>
             <Image src="/images/person6.png" width="280" height="258" alt="person" /></div>
         </div>
       </main >
